@@ -12,7 +12,9 @@ export function SignInForm() {
 
   async function clientAction(formData: FormData) {
     const result = await signInAction(formData);
-    setMessage(result.message);
+    if (result) {
+      setMessage(result.message);
+    }
   }
 
   return (
@@ -36,4 +38,3 @@ export function SignInForm() {
     </form>
   );
 }
-

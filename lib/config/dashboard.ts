@@ -26,5 +26,10 @@ export const dashboardNav: NavItem[] = [
     href: "/dashboard/ingestion",
     intent: "primary",
   },
+  {
+    title: "Profile",
+    href: "/dashboard/profile",
+    intent: "secondary",
+  },
 ];
 

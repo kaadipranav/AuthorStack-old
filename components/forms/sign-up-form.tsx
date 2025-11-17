@@ -12,7 +12,9 @@ export function SignUpForm() {
 
   async function clientAction(formData: FormData) {
     const result = await signUpAction(formData);
-    setMessage(result.message);
+    if (result) {
+      setMessage(result.message);
+    }
   }
 
   return (
