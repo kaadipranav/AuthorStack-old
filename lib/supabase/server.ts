@@ -1,17 +1,38 @@
-import { createClient } from "@supabase/supabase-js";
+import { cookies } from "next/headers";
+import { createServerClient } from "@supabase/ssr";
 
 import { env } from "@/lib/env";
 
-export function createSupabaseServerClient() {
+export async function createSupabaseServerClient() {
   if (!env.NEXT_PUBLIC_SUPABASE_URL || !env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
     throw new Error("Supabase server client requires NEXT_PUBLIC_SUPABASE_* env vars.");
   }
 
-  return createClient(env.NEXT_PUBLIC_SUPABASE_URL, env.NEXT_PUBLIC_SUPABASE_ANON_KEY, {
-    auth: {
-      persistSession: false,
-      detectSessionInUrl: false,
-    },
-  });
-}
+  const cookieStore = await cookies();
 
+  return createServerClient(
+    env.NEXT_PUBLIC_SUPABASE_URL,
+    env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    {
+      cookies: {
+        get(name) {
+          return cookieStore.get(name)?.value;
+        },
+        set(name, value, options) {
+          cookieStore.set({
+            name,
+            value,
+            ...options,
+          });
+        },
+        remove(name, options) {
+          cookieStore.set({
+            name,
+            value: "",
+            ...options,
+          });
+        },
+      },
+    }
+  );
+}
