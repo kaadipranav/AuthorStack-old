@@ -9,26 +9,32 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ChecklistForm } from "@/features/checklists/components/checklist-form";
+import { requireAuth } from "@/lib/auth/session";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 type ChecklistDetailsProps = {
   params: { checklistId: string };
 };
 
-const mockChecklist = {
-  id: "launch-1",
-  name: "Spring Launch",
-  tasks: [
-    { id: "task-1", title: "Finalize cover art", status: "in_progress" },
-    { id: "task-2", title: "Upload KDP assets", status: "not_started" },
-  ],
-};
+export default async function ChecklistDetailsPage({ params }: ChecklistDetailsProps) {
+  const user = await requireAuth();
+  const supabase = await createSupabaseServerClient();
+  const { data: checklist } = await supabase
+    .from("launch_checklists")
+    .select("*")
+    .eq("id", params.checklistId)
+    .eq("profile_id", user.id)
+    .maybeSingle();
 
-export default function ChecklistDetailsPage({ params }: ChecklistDetailsProps) {
-  if (!params.checklistId) {
+  if (!checklist) {
     notFound();
   }
 
-  const checklist = mockChecklist;
+  const { data: tasks } = await supabase
+    .from("launch_tasks")
+    .select("*")
+    .eq("checklist_id", checklist.id)
+    .order("due_date", { ascending: true });
 
   return (
     <DashboardShell
@@ -41,13 +47,12 @@ export default function ChecklistDetailsPage({ params }: ChecklistDetailsProps) 
           <CardDescription>Mark complete to keep launches on track.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-3">
-          {checklist.tasks.map((task) => (
-            <div key={task.id} className="flex items-center justify-between rounded-lg border p-3">
-              <div>
-                <p className="font-medium">{task.title}</p>
-                <p className="text-xs text-muted-foreground">Status: {task.status}</p>
-              </div>
-              <button className="text-sm text-primary">Toggle</button>
+          {(tasks ?? []).map((task) => (
+            <div key={task.id} className="rounded-lg border p-3 text-sm">
+              <p className="font-medium">{task.title}</p>
+              <p className="text-xs text-muted-foreground">
+                Status: {task.status} • Due {task.due_date ?? "TBD"}
+              </p>
             </div>
           ))}
         </CardContent>
@@ -58,7 +63,15 @@ export default function ChecklistDetailsPage({ params }: ChecklistDetailsProps) 
           <CardTitle>Update checklist</CardTitle>
         </CardHeader>
         <CardContent>
-          <ChecklistForm mode="update" checklistId={checklist.id} />
+          <ChecklistForm
+            mode="update"
+            checklistId={checklist.id}
+            defaultValues={{
+              name: checklist.name,
+              launch_date: checklist.launch_date,
+              notes: checklist.notes,
+            }}
+          />
         </CardContent>
       </Card>
     </DashboardShell>
