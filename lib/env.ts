@@ -1,0 +1,67 @@
+import { createEnv } from "@t3-oss/env-nextjs";
+import { z } from "zod";
+
+const defaultFeatureFlags = JSON.stringify({
+  leaderboard: false,
+  mascot: false,
+  community: false,
+  distribution: false,
+});
+
+export const env = createEnv({
+  server: {
+    NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
+    NEXTAUTH_URL: z.string().url().default("http://localhost:3000"),
+    SUPABASE_SERVICE_ROLE_KEY: z.string().optional(),
+    SUPABASE_DB_URL: z.string().url().optional(),
+    JWT_SECRET: z.string().min(32).optional(),
+    WHOP_API_KEY: z.string().optional(),
+    WHOP_WEBHOOK_SECRET: z.string().optional(),
+    RESEND_API_KEY: z.string().optional(),
+    FROM_EMAIL: z.string().email().optional(),
+    UPSTASH_REDIS_REST_URL: z.string().url().optional(),
+    UPSTASH_REDIS_REST_TOKEN: z.string().optional(),
+    UPSTASH_QSTASH_URL: z.string().url().optional(),
+    UPSTASH_QSTASH_TOKEN: z.string().optional(),
+    UPSTASH_QSTASH_CURRENT_SIGNING_KEY: z.string().optional(),
+    SENTRY_DSN: z.string().url().optional(),
+    POSTHOG_API_KEY: z.string().optional(),
+    PROXIES_JSON: z.string().optional(),
+  },
+  client: {
+    NEXT_PUBLIC_APP_URL: z.string().url().default("http://localhost:3000"),
+    NEXT_PUBLIC_VERCEL_ENV: z.string().default("development"),
+    NEXT_PUBLIC_SUPABASE_URL: z.string().url().optional(),
+    NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().optional(),
+    NEXT_PUBLIC_FEATURES: z
+      .string()
+      .default(defaultFeatureFlags)
+      .transform((value) => value || defaultFeatureFlags),
+  },
+  runtimeEnv: {
+    NODE_ENV: process.env.NODE_ENV,
+    NEXTAUTH_URL: process.env.NEXTAUTH_URL ?? "http://localhost:3000",
+    SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY,
+    SUPABASE_DB_URL: process.env.SUPABASE_DB_URL,
+    JWT_SECRET: process.env.JWT_SECRET,
+    WHOP_API_KEY: process.env.WHOP_API_KEY,
+    WHOP_WEBHOOK_SECRET: process.env.WHOP_WEBHOOK_SECRET,
+    RESEND_API_KEY: process.env.RESEND_API_KEY,
+    FROM_EMAIL: process.env.FROM_EMAIL,
+    UPSTASH_REDIS_REST_URL: process.env.UPSTASH_REDIS_REST_URL,
+    UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN,
+    UPSTASH_QSTASH_URL: process.env.UPSTASH_QSTASH_URL,
+    UPSTASH_QSTASH_TOKEN: process.env.UPSTASH_QSTASH_TOKEN,
+    UPSTASH_QSTASH_CURRENT_SIGNING_KEY: process.env.UPSTASH_QSTASH_CURRENT_SIGNING_KEY,
+    SENTRY_DSN: process.env.SENTRY_DSN,
+    POSTHOG_API_KEY: process.env.POSTHOG_API_KEY,
+    PROXIES_JSON: process.env.PROXIES_JSON,
+    NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
+    NEXT_PUBLIC_VERCEL_ENV: process.env.NEXT_PUBLIC_VERCEL_ENV,
+    NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
+    NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    NEXT_PUBLIC_FEATURES: process.env.NEXT_PUBLIC_FEATURES,
+  },
+  skipValidation: Boolean(process.env.SKIP_ENV_VALIDATION),
+});
+
