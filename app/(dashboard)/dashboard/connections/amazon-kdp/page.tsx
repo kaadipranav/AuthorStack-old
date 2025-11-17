@@ -4,6 +4,8 @@ import {
   KdpUploadForm,
   PlatformConnectForm,
 } from "@/features/platforms/components/platform-connect-form";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function AmazonKdpConnectionPage() {
   return (
@@ -31,6 +33,25 @@ export default function AmazonKdpConnectionPage() {
           </CardContent>
         </Card>
       </div>
+      <Card>
+        <CardHeader>
+          <CardTitle>Webhook endpoint (placeholder)</CardTitle>
+          <CardDescription>
+            Use this endpoint for manual testing until real ingestion is enabled.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-3 text-sm">
+          <p>The endpoint accepts POST payloads at:</p>
+          <code className="rounded bg-muted px-2 py-1 text-xs">
+            /api/webhooks/platforms/amazon-kdp
+          </code>
+          <Button asChild variant="outline">
+            <Link href="/api/webhooks/platforms/amazon-kdp" target="_blank">
+              View webhook endpoint
+            </Link>
+          </Button>
+        </CardContent>
+      </Card>
     </DashboardShell>
   );
 }

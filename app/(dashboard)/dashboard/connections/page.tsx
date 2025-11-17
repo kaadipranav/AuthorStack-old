@@ -3,6 +3,8 @@ import Link from "next/link";
 import { DashboardShell } from "@/components/layout/dashboard-shell";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { requireAuth } from "@/lib/auth/session";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 const connectors = [
   {
@@ -22,7 +24,15 @@ const connectors = [
   },
 ];
 
-export default function ConnectionsPage() {
+export default async function ConnectionsPage() {
+  const user = await requireAuth();
+  const supabase = await createSupabaseServerClient();
+  const { data: existingConnections } = await supabase
+    .from("platform_connections")
+    .select("*")
+    .eq("profile_id", user.id)
+    .order("created_at", { ascending: false });
+
   return (
     <DashboardShell
       title="Platform connections"
@@ -43,6 +53,24 @@ export default function ConnectionsPage() {
           </Card>
         ))}
       </div>
+      <Card className="mt-6">
+        <CardHeader>
+          <CardTitle>Existing connections</CardTitle>
+          <CardDescription>Status of each provider.</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-3 text-sm">
+          {(existingConnections ?? []).length === 0 ? (
+            <p className="text-muted-foreground">No connections yet.</p>
+          ) : (
+            existingConnections?.map((connection) => (
+              <div key={connection.id} className="flex items-center justify-between rounded border px-3 py-2">
+                <span className="font-medium capitalize">{connection.provider}</span>
+                <span className="text-muted-foreground">{connection.status}</span>
+              </div>
+            ))
+          )}
+        </CardContent>
+      </Card>
     </DashboardShell>
   );
 }
