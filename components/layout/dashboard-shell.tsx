@@ -1,28 +1,112 @@
 import type { ReactNode } from "react";
+import Link from "next/link";
+import { CalendarDays, LogOut, Menu, Settings } from "lucide-react";
 
 import { DashboardNav } from "@/components/navigation/dashboard-nav";
+import { ThemeToggle } from "@/components/navigation/theme-toggle";
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { signOutAction } from "@/lib/auth/actions";
+import { siteConfig } from "@/lib/config/site";
 
 type DashboardShellProps = {
   title: string;
   description?: string;
   children: ReactNode;
+  toolbar?: ReactNode;
 };
 
-export function DashboardShell({ title, description, children }: DashboardShellProps) {
+function DesktopSidebar() {
   return (
-    <div className="container flex flex-col gap-6 py-8 lg:flex-row">
-      <aside className="w-full shrink-0 rounded-xl border bg-card/60 p-4 lg:w-64">
-        <div className="mb-6">
-          <p className="text-xs font-semibold uppercase text-muted-foreground">Navigation</p>
+    <aside className="hidden w-64 shrink-0 flex-col justify-between rounded-3xl border border-primary/10 bg-card/80 p-6 shadow-lg shadow-primary/5 lg:flex">
+      <div className="space-y-8">
+        <div className="space-y-2">
+          <p className="text-xs font-semibold uppercase tracking-wide text-primary">Launch studio</p>
+          <p className="text-sm text-muted-foreground">
+            Navigate ingestion jobs, platform connections, and launch automation.
+          </p>
         </div>
         <DashboardNav />
-      </aside>
+      </div>
+      <div className="space-y-3 rounded-2xl border border-primary/10 bg-card/90 p-4 text-xs text-muted-foreground">
+        <p className="font-semibold text-primary">Need faster support?</p>
+        <p>
+          Review the <Link href="/docs" className="underline">deployment guide</Link> or check
+          <a
+            href={siteConfig.links.status}
+            target="_blank"
+            rel="noreferrer"
+            className="pl-1 underline"
+          >
+            status
+          </a>
+        </p>
+      </div>
+    </aside>
+  );
+}
+
+function MobileSidebar() {
+  return (
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button variant="outline" size="icon" className="lg:hidden">
+          <Menu className="size-4" />
+        </Button>
+      </SheetTrigger>
+      <SheetContent side="left" className="w-full max-w-xs border-r border-primary/10 bg-card/90">
+        <div className="space-y-6">
+          <div className="space-y-1">
+            <p className="text-xs font-semibold uppercase tracking-wide text-primary">Launch studio</p>
+            <p className="text-sm text-muted-foreground">
+              Access ingestion, platform connections, and launch automation.
+            </p>
+          </div>
+          <DashboardNav />
+        </div>
+      </SheetContent>
+    </Sheet>
+  );
+}
+
+export function DashboardShell({ title, description, children, toolbar }: DashboardShellProps) {
+  return (
+    <div className="mx-auto flex w-full max-w-[1400px] flex-col gap-6 px-6 py-10 lg:flex-row">
+      <DesktopSidebar />
       <section className="flex-1 space-y-6">
-        <header className="space-y-2">
-          <h1 className="text-3xl font-semibold">{title}</h1>
-          {description ? <p className="text-sm text-muted-foreground">{description}</p> : null}
-        </header>
-        <div className="rounded-xl border bg-card/50 p-6">{children}</div>
+        <div className="flex flex-col justify-between gap-4 rounded-3xl border border-primary/10 bg-card/80 p-6 shadow-lg shadow-primary/5 backdrop-blur sm:flex-row sm:items-center">
+          <div className="space-y-2">
+            <div className="flex items-center gap-3 text-xs uppercase tracking-wide text-muted-foreground">
+              <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-primary">
+                <CalendarDays className="size-3" /> AuthorStack Command Center
+              </span>
+            </div>
+            <div>
+              <h1 className="text-3xl font-semibold leading-tight text-foreground sm:text-4xl">{title}</h1>
+              {description ? (
+                <p className="mt-2 max-w-2xl text-sm text-muted-foreground">{description}</p>
+              ) : null}
+            </div>
+          </div>
+          <div className="flex flex-wrap items-center gap-3">
+            <ThemeToggle />
+            {toolbar}
+            <Button variant="ghost" size="icon" asChild>
+              <Link href="/dashboard/profile">
+                <Settings className="size-4" />
+              </Link>
+            </Button>
+            <form action={signOutAction}>
+              <Button variant="outline" size="icon">
+                <LogOut className="size-4" />
+              </Button>
+            </form>
+            <MobileSidebar />
+          </div>
+        </div>
+        <div className="space-y-6 rounded-3xl border border-primary/10 bg-background/95 p-6 shadow-lg shadow-primary/5">
+          {children}
+        </div>
       </section>
     </div>
   );

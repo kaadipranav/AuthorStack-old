@@ -11,7 +11,7 @@ import {
   signUpSchema,
 } from "@/lib/auth/validators";
 
-type ActionResponse = {
+export type ActionResponse = {
   success: boolean;
   message: string;
 };

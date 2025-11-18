@@ -3,6 +3,8 @@ import path from "node:path";
 
 import { notFound } from "next/navigation";
 
+import { PublicShell } from "@/components/layout/public-shell";
+
 type Params = {
   slug?: string[];
 };
@@ -38,7 +40,7 @@ export default async function DocArticle({ params }: { params: Params }) {
   }
 
   return (
-    <div className="container space-y-4 py-8">
+    <PublicShell mainClassName="space-y-6">
       <div>
         <p className="text-xs font-semibold uppercase text-primary">Repository Docs</p>
         <h1 className="text-3xl font-semibold">{doc.relativePath}</h1>
@@ -46,7 +48,7 @@ export default async function DocArticle({ params }: { params: Params }) {
       <pre className="overflow-auto rounded-xl border bg-card/60 p-6 text-sm leading-relaxed text-foreground">
         {doc.content}
       </pre>
-    </div>
+    </PublicShell>
   );
 }
 

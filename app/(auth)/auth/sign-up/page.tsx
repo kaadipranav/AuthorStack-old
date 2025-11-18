@@ -8,19 +8,24 @@ export const metadata = {
 
 export default function SignUpPage() {
   return (
-    <div className="space-y-6">
-      <div className="space-y-2 text-center">
-        <p className="text-xs font-semibold uppercase text-primary">Early access</p>
-        <h1 className="text-2xl font-semibold">Create your AuthorStack account</h1>
-        <p className="text-sm text-muted-foreground">Supabase auth is wired up behind the scenes.</p>
-      </div>
+    <div className="space-y-8">
+      <header className="space-y-3 text-center">
+        <p className="text-xs font-semibold uppercase tracking-wide text-primary">Early access</p>
+        <h1 className="text-3xl font-semibold text-foreground">Launch studio onboarding</h1>
+        <p className="text-sm text-muted-foreground">
+          Your AuthorStack credentials power Supabase Auth, Whop membership syncing, and all ingestion permissions. Fill
+          in the details below to activate your workspace.
+        </p>
+      </header>
+
       <SignUpForm />
-      <p className="text-center text-sm text-muted-foreground">
-        Already have an account?{" "}
-        <Link href="/auth/sign-in" className="text-primary">
-          Sign in.
-        </Link>
-      </p>
+
+      <div className="rounded-lg border border-primary/10 bg-card/80 px-4 py-3 text-sm text-muted-foreground">
+        <p>
+          Already verified? <Link href="/auth/sign-in" className="font-semibold text-primary">Sign in</Link> with your
+          existing workspace credentials.
+        </p>
+      </div>
     </div>
   );
 }

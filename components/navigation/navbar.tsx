@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { MenuIcon } from "lucide-react";
 
@@ -34,11 +35,23 @@ export function Navbar() {
     <header className="border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between gap-3">
         <div className="flex items-center gap-6">
-          <Link href="/" className="flex items-center gap-2 text-base font-semibold">
-            <span className="inline-flex size-8 items-center justify-center rounded-md bg-primary/10 text-primary">
-              AS
+          <Link href="/" className="flex items-center" aria-label="AuthorStack home">
+            <span className="relative h-9 w-9 sm:h-10 sm:w-10">
+              <Image
+                src="/logos/Light_logo.png"
+                alt="AuthorStack logo"
+                fill
+                priority
+                className="object-contain dark:hidden"
+              />
+              <Image
+                src="/logos/Dark_logo.png"
+                alt="AuthorStack logo"
+                fill
+                priority
+                className="hidden object-contain dark:block"
+              />
             </span>
-            {siteConfig.name}
           </Link>
           <div className="hidden md:block">
             <NavigationMenu>

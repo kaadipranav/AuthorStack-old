@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { PublicShell } from "@/components/layout/public-shell";
 import { Button } from "@/components/ui/button";
 
 const docsLinks = [
@@ -22,7 +23,7 @@ const docsLinks = [
 
 export default function DocsPage() {
   return (
-    <div className="container space-y-10 py-10">
+    <PublicShell mainClassName="space-y-10">
       <header className="space-y-3">
         <p className="text-xs font-semibold uppercase text-primary">Docs</p>
         <h1 className="text-3xl font-semibold">Build & run AuthorStack with confidence.</h1>
@@ -43,7 +44,7 @@ export default function DocsPage() {
           </div>
         ))}
       </div>
-    </div>
+    </PublicShell>
   );
 }
 
