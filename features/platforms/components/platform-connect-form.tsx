@@ -33,7 +33,7 @@ export function PlatformConnectForm({ provider }: PlatformConnectFormProps) {
         <Label htmlFor={`${provider}-accountId`}>Account identifier</Label>
         <Input id={`${provider}-accountId`} name="accountId" />
       </div>
-      {message ? <p className="text-sm text-muted-foreground">{message}</p> : null}
+      {message ? <p className="text-sm text-charcoal">{message}</p> : null}
       <FormSubmit pendingLabel="Connecting...">Connect {provider}</FormSubmit>
     </form>
   );
@@ -53,7 +53,7 @@ export function KdpUploadForm() {
         <Label htmlFor="kdpCsv">Upload Amazon KDP CSV</Label>
         <Input id="kdpCsv" name="file" type="file" accept=".csv" required />
       </div>
-      {message ? <p className="text-sm text-muted-foreground">{message}</p> : null}
+      {message ? <p className="text-sm text-charcoal">{message}</p> : null}
       <FormSubmit pendingLabel="Uploading...">Upload CSV</FormSubmit>
     </form>
   );

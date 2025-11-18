@@ -42,7 +42,7 @@ export default function AmazonKdpConnectionPage() {
         </CardHeader>
         <CardContent className="space-y-3 text-sm">
           <p>The endpoint accepts POST payloads at:</p>
-          <code className="rounded bg-muted px-2 py-1 text-xs">
+          <code className="rounded bg-glass px-2 py-1 text-xs">
             /api/webhooks/platforms/amazon-kdp
           </code>
           <Button asChild variant="outline">

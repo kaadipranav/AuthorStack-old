@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 
@@ -13,11 +14,27 @@ export type PublicShellProps = {
 
 export function PublicShell({ children, mainClassName, hideAuthLinks = false }: PublicShellProps) {
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <header className="border-b border-primary/10 bg-background/80 backdrop-blur">
+    <div className="min-h-screen bg-paper text-ink">
+      <header className="border-b border-burgundy/10 bg-surface/80 backdrop-blur">
         <div className="mx-auto flex w-full max-w-[1400px] items-center justify-between px-6 py-4">
-          <Link href="/" className="text-sm font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-            AuthorStack
+          <Link href="/" className="flex items-center gap-3">
+            <div className="relative h-8 w-8 transition-transform duration-300 hover:scale-105">
+              <Image
+                src="/logos/Light_logo.png"
+                alt="AuthorStack logo"
+                fill
+                priority
+                className="object-contain dark:hidden"
+              />
+              <Image
+                src="/logos/Dark_logo.png"
+                alt="AuthorStack logo"
+                fill
+                priority
+                className="hidden object-contain dark:block"
+              />
+            </div>
+            <span className="text-sm font-semibold uppercase tracking-[0.2em] text-charcoal">AuthorStack</span>
           </Link>
           <div className="flex items-center gap-3">
             <ThemeToggle />

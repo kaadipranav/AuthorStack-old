@@ -42,10 +42,10 @@ export default async function DocArticle({ params }: { params: Params }) {
   return (
     <PublicShell mainClassName="space-y-6">
       <div>
-        <p className="text-xs font-semibold uppercase text-primary">Repository Docs</p>
+        <p className="text-xs font-semibold uppercase text-burgundy">Repository Docs</p>
         <h1 className="text-3xl font-semibold">{doc.relativePath}</h1>
       </div>
-      <pre className="overflow-auto rounded-xl border bg-card/60 p-6 text-sm leading-relaxed text-foreground">
+      <pre className="overflow-auto rounded-xl border bg-surface/60 p-6 text-sm leading-relaxed text-ink">
         {doc.content}
       </pre>
     </PublicShell>

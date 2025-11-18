@@ -17,12 +17,12 @@ export default function BooksError({
 
   return (
     <div className="space-y-4">
-      <div className="rounded-lg border border-destructive/50 bg-destructive/10 p-4">
+      <div className="rounded-lg border border-danger/50 bg-danger/10 p-4">
         <div className="flex items-center gap-3">
-          <AlertCircle className="size-5 text-destructive" />
+          <AlertCircle className="size-5 text-danger" />
           <div>
             <h3 className="font-semibold">Failed to load books</h3>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-charcoal">
               {error.message || "An error occurred while loading your books."}
             </p>
           </div>

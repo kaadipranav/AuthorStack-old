@@ -1,10 +1,51 @@
 import Link from "next/link";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight, Check, BookOpen, Calendar, TrendingUp } from "lucide-react";
+import type { Metadata } from "next";
 
-import { PublicShell } from "@/components/layout/public-shell";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { siteConfig } from "@/lib/config/site";
+
+export const metadata: Metadata = {
+  title: "AuthorStack - Unified Dashboard for Indie Authors",
+  description: "A single pane of glass for indie authors: sales intelligence, launch readiness, and growth automations. Connect Amazon KDP, Gumroad, and Whop in minutes.",
+  keywords: [
+    "indie authors",
+    "book publishing",
+    "self-publishing",
+    "sales tracking",
+    "launch management",
+    "author tools",
+    "publishing dashboard",
+    "royalty tracking",
+    "book marketing",
+    "author productivity"
+  ],
+  openGraph: {
+    title: "AuthorStack - Unified Dashboard for Indie Authors",
+    description: "A single pane of glass for indie authors: sales intelligence, launch readiness, and growth automations.",
+    type: "website",
+    locale: "en_US",
+  },
+};
+
+const heroFeatures = [
+  {
+    icon: BookOpen,
+    title: "Unified Dashboard",
+    description: "One view for all your sales channels and launch progress",
+  },
+  {
+    icon: Calendar,
+    title: "Launch Playbooks",
+    description: "Structured checklists to ship your next book on time",
+  },
+  {
+    icon: TrendingUp,
+    title: "Data Insights",
+    description: "Real-time revenue tracking and competitive analysis",
+  },
+];
 
 const valueProps = [
   {
@@ -68,123 +109,212 @@ const featureHighlights = [
 
 export default function Home() {
   return (
-    <PublicShell mainClassName="flex flex-col gap-20">
-      <section className="grid items-start gap-12 lg:grid-cols-[1.2fr,0.8fr]">
-          <div className="space-y-7">
-            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-primary">Indie authorship, operationalized</p>
-            <h1 className="text-4xl font-semibold tracking-tight text-balance sm:text-5xl lg:text-6xl">
-              Keep every launch, sale, and superfAN in one calm workspace.
-            </h1>
-            <p className="max-w-xl text-base text-muted-foreground sm:text-lg">
-              Connect storefronts, automate ingestion, and run launches like a team of five. AuthorStack gives busy indie
-              authors the cockpit they need to grow every series and membership.
-            </p>
-            <div className="flex flex-wrap gap-3">
-              <Button asChild size="lg">
-                <Link href="/auth/sign-up">
-                  Create your studio
-                  <ArrowRight className="ml-2 size-4" />
-                </Link>
-              </Button>
-              <Button asChild size="lg" variant="outline">
+    <div className="min-h-screen bg-paper">
+      {/* Hero Section */}
+      <section className="container py-20 md:py-32">
+        <div className="grid gap-16 lg:grid-cols-2 items-center">
+          <div className="space-y-10">
+            <div className="space-y-6">
+              <p className="text-small uppercase tracking-widest text-burgundy font-semibold transition-colors duration-300 hover:text-burgundy/80">
+                Indie authorship, operationalized
+              </p>
+              <h1 className="text-display text-ink leading-tight transition-all duration-300 hover:opacity-90">
+                Keep every launch, sale, and superfAN in one calm workspace.
+              </h1>
+              <p className="text-2xl text-charcoal max-w-3xl transition-colors duration-300 hover:text-charcoal/80">
+                Connect storefronts, automate ingestion, and run launches like a team of five. AuthorStack gives busy indie
+                authors the cockpit they need to grow every series and membership.
+              </p>
+            </div>
+            
+            <div className="flex flex-wrap gap-5">
+              <button className="group relative inline-flex items-center justify-center px-8 py-4 overflow-hidden font-medium text-surface transition-all duration-300 bg-burgundy rounded-lg hover:bg-burgundy/90 hover:scale-105">
+                <span className="absolute inset-0 w-full h-full transition-all duration-300 ease-in-out bg-burgundy/90 opacity-0 group-hover:opacity-100"></span>
+                <span className="absolute bottom-0 right-0 block w-64 h-64 mb-32 mr-4 transition-all duration-500 ease-in-out transform translate-x-24 rotate-45 translate-y-24 bg-surface opacity-10 group-hover:translate-x-0"></span>
+                <span className="relative flex items-center text-lg font-semibold">
+                  <Link href="/auth/sign-up" className="flex items-center">
+                    Create your studio
+                    <ArrowRight className="ml-3 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+                  </Link>
+                </span>
+              </button>
+              <Button asChild size="lg" variant="outline" className="border-stroke text-ink hover:bg-glass hover:scale-105 transition-all duration-300">
                 <Link href="/auth/sign-in">I already have an account</Link>
               </Button>
             </div>
-            <div className="grid gap-4 md:grid-cols-3">
-              {valueProps.map((prop) => (
-                <Card key={prop.title} className="border-primary/10 bg-card/80 shadow-md shadow-primary/5">
-                  <CardHeader>
-                    <CardTitle className="text-left text-base font-semibold text-primary/90">{prop.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-left text-sm text-muted-foreground">{prop.description}</p>
-                  </CardContent>
-                </Card>
-              ))}
+            
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 pt-10">
+              {heroFeatures.map((feature) => {
+                const Icon = feature.icon;
+                return (
+                  <div 
+                    key={feature.title} 
+                    className="text-center group cursor-pointer transition-all duration-300 hover:-translate-y-2"
+                  >
+                    <div className="mx-auto w-16 h-16 rounded-full bg-burgundy/10 flex items-center justify-center mb-4 transition-all duration-300 group-hover:bg-burgundy/20 group-hover:scale-110">
+                      <Icon className="h-8 w-8 text-burgundy transition-all duration-300 group-hover:text-burgundy/80" />
+                    </div>
+                    <h3 className="text-2xl font-semibold text-ink mb-2 transition-colors duration-300 group-hover:text-burgundy">{feature.title}</h3>
+                    <p className="text-base text-charcoal transition-colors duration-300 group-hover:text-charcoal/80">{feature.description}</p>
+                  </div>
+                );
+              })}
             </div>
           </div>
-          <Card className="h-full border-primary/10 bg-card/80 shadow-xl shadow-primary/10">
-            <CardHeader>
-              <CardTitle>Why authors switch to AuthorStack</CardTitle>
-              <CardDescription>Everything you need to run a book launch — minus the chaos.</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4 text-sm text-muted-foreground">
+          
+          <div className="hidden lg:block relative">
+            <div className="absolute inset-0 bg-burgundy/5 rounded-3xl transform rotate-3 transition-all duration-500 hover:rotate-6"></div>
+            <div className="relative bg-surface border border-stroke rounded-3xl p-8 shadow-2xl transition-all duration-300 hover:shadow-3xl">
+              <div className="space-y-6">
+                <div className="flex justify-between items-center">
+                  <div className="h-5 w-32 bg-glass rounded transition-all duration-300 hover:bg-glass/80"></div>
+                  <div className="h-10 w-10 rounded-full bg-burgundy/10 transition-all duration-300 hover:bg-burgundy/20"></div>
+                </div>
+                <div className="grid grid-cols-3 gap-5">
+                  <div className="bg-glass border border-stroke rounded-xl p-5 transition-all duration-300 hover:bg-glass/80 hover:scale-105">
+                    <div className="h-7 bg-burgundy/10 rounded mb-3 w-20 transition-all duration-300 hover:bg-burgundy/20"></div>
+                    <div className="h-5 bg-glass rounded w-16 transition-all duration-300 hover:bg-glass/80"></div>
+                  </div>
+                  <div className="bg-glass border border-stroke rounded-xl p-5 transition-all duration-300 hover:bg-glass/80 hover:scale-105">
+                    <div className="h-7 bg-burgundy/10 rounded mb-3 w-20 transition-all duration-300 hover:bg-burgundy/20"></div>
+                    <div className="h-5 bg-glass rounded w-16 transition-all duration-300 hover:bg-glass/80"></div>
+                  </div>
+                  <div className="bg-glass border border-stroke rounded-xl p-5 transition-all duration-300 hover:bg-glass/80 hover:scale-105">
+                    <div className="h-7 bg-burgundy/10 rounded mb-3 w-20 transition-all duration-300 hover:bg-burgundy/20"></div>
+                    <div className="h-5 bg-glass rounded w-16 transition-all duration-300 hover:bg-glass/80"></div>
+                  </div>
+                </div>
+                <div className="h-60 bg-glass border border-stroke rounded-xl flex items-center justify-center transition-all duration-300 hover:bg-glass/80">
+                  <span className="text-charcoal text-lg">Revenue Chart Visualization</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Value Props */}
+      <section className="container py-20 bg-surface border-y border-stroke">
+        <div className="max-w-4xl mx-auto text-center mb-20">
+          <h2 className="text-5xl font-bold text-ink mb-6 transition-all duration-300 hover:opacity-90">Everything you need to run a successful book launch</h2>
+          <p className="text-2xl text-charcoal max-w-3xl mx-auto transition-colors duration-300 hover:text-charcoal/80">
+            AuthorStack brings together all the tools indie authors need to manage their publishing business.
+          </p>
+        </div>
+        
+        <div className="grid gap-10 md:grid-cols-3">
+          {valueProps.map((prop) => (
+            <Card 
+              key={prop.title} 
+              className="border-stroke bg-surface h-full transition-all duration-300 hover:-translate-y-3 hover:shadow-xl"
+            >
+              <CardHeader>
+                <CardTitle className="text-3xl text-ink transition-colors duration-300 hover:text-burgundy">{prop.title}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-lg text-charcoal transition-colors duration-300 hover:text-charcoal/80">{prop.description}</p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      {/* Feature Highlights */}
+      <section className="container py-20">
+        <div className="grid gap-16 lg:grid-cols-2 items-center">
+          <div>
+            <h2 className="text-5xl font-bold text-ink mb-6 transition-all duration-300 hover:opacity-90">Why authors switch to AuthorStack</h2>
+            <p className="text-2xl text-charcoal mb-12 max-w-3xl transition-colors duration-300 hover:text-charcoal/80">
+              Everything you need to run a book launch — minus the chaos.
+            </p>
+            
+            <div className="space-y-8">
               {featureHighlights.map((feature) => (
-                <div key={feature.title} className="rounded-2xl border border-primary/10 bg-background/70 p-4">
-                  <p className="text-sm font-semibold text-primary/90">{feature.title}</p>
-                  <ul className="mt-2 space-y-2 text-xs text-muted-foreground">
+                <div 
+                  key={feature.title} 
+                  className="p-8 rounded-2xl border border-stroke bg-glass transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+                >
+                  <h3 className="text-3xl text-ink mb-4 transition-colors duration-300 hover:text-burgundy">{feature.title}</h3>
+                  <ul className="space-y-3">
                     {feature.details.map((detail) => (
-                      <li key={detail} className="flex items-start gap-2">
-                        <Check className="mt-0.5 size-3 text-primary" />
-                        <span>{detail}</span>
+                      <li key={detail} className="flex items-start gap-4">
+                        <Check className="h-6 w-6 text-success mt-1 flex-shrink-0 transition-all duration-300 hover:scale-110" />
+                        <span className="text-lg text-charcoal transition-colors duration-300 hover:text-charcoal/80">{detail}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
               ))}
-            </CardContent>
-          </Card>
-        </section>
+            </div>
+          </div>
+          
+          <div className="space-y-8">
+            <Card className="border-stroke bg-surface transition-all duration-300 hover:shadow-xl">
+              <CardHeader>
+                <CardTitle className="text-3xl">Trusted by indie authors</CardTitle>
+                <CardDescription className="text-lg">Publishing on their own terms</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-8">
+                {testimonials.map((testimonial) => (
+                  <blockquote 
+                    key={testimonial.name} 
+                    className="p-7 rounded-xl border border-stroke bg-glass transition-all duration-300 hover:shadow-lg"
+                  >
+                    <p className="text-lg italic text-ink mb-4 transition-colors duration-300 hover:text-charcoal">“{testimonial.quote}”</p>
+                    <footer className="text-base font-medium text-charcoal transition-colors duration-300 hover:text-burgundy">
+                      {testimonial.name} · {testimonial.role}
+                    </footer>
+                  </blockquote>
+                ))}
+              </CardContent>
+            </Card>
+            
+            <Card className="border-stroke bg-surface transition-all duration-300 hover:shadow-xl">
+              <CardHeader>
+                <CardTitle className="text-3xl">Production-ready in a weekend</CardTitle>
+                <CardDescription className="text-lg">Deploy with your own branding and launch playbooks</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="p-6 rounded-xl border border-stroke bg-glass transition-all duration-300 hover:shadow-md">
+                  <p className="text-small uppercase tracking-wider text-burgundy font-semibold mb-3 transition-colors duration-300 hover:text-burgundy/80">Getting started</p>
+                  <p className="text-lg text-charcoal transition-colors duration-300 hover:text-charcoal/80">
+                    Clone the repo, drop in Supabase, Upstash, Whop, and Resend keys, and push to Vercel.
+                  </p>
+                </div>
+                <div className="p-6 rounded-xl border border-stroke bg-glass transition-all duration-300 hover:shadow-md">
+                  <p className="text-small uppercase tracking-wider text-burgundy font-semibold mb-3 transition-colors duration-300 hover:text-burgundy/80">Launch ops</p>
+                  <p className="text-lg text-charcoal transition-colors duration-300 hover:text-charcoal/80">
+                    Checklists keep editors, cover designers, and VAs aligned with due dates and ownership.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
 
-        <section className="grid gap-6 lg:grid-cols-[0.9fr,1.1fr]">
-          <Card className="border-primary/10 bg-card/80">
-            <CardHeader>
-              <CardTitle>Trusted by indie authors publishing on their own terms</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6 text-left text-sm text-muted-foreground">
-              {testimonials.map((testimonial) => (
-                <blockquote key={testimonial.name} className="rounded-2xl border border-primary/10 bg-background/70 p-5">
-                  <p className="text-sm italic text-muted-foreground">“{testimonial.quote}”</p>
-                  <footer className="mt-3 text-xs font-medium text-foreground">
-                    {testimonial.name} · {testimonial.role}
-                  </footer>
-                </blockquote>
-              ))}
-            </CardContent>
-          </Card>
-          <Card className="border-primary/10 bg-card/80">
-            <CardHeader>
-              <CardTitle>Production-ready in a weekend</CardTitle>
-              <CardDescription>Deploy with your own branding, domains, and launch playbooks.</CardDescription>
-            </CardHeader>
-            <CardContent className="grid gap-3 text-sm text-muted-foreground">
-              <div className="rounded-2xl border border-primary/10 bg-background/70 p-4">
-                <p className="text-xs font-semibold uppercase tracking-wide text-primary">Getting started</p>
-                <p className="mt-2 text-sm text-muted-foreground">
-                  Clone the repo, drop in Supabase, Upstash, Whop, and Resend keys, and push to Vercel.
-                </p>
-              </div>
-              <div className="rounded-2xl border border-primary/10 bg-background/70 p-4">
-                <p className="text-xs font-semibold uppercase tracking-wide text-primary">Launch ops</p>
-                <p className="mt-2 text-sm text-muted-foreground">
-                  Checklists keep editors, cover designers, and VAs aligned with due dates and ownership.
-                </p>
-              </div>
-              <div className="rounded-2xl border border-primary/10 bg-background/70 p-4">
-                <p className="text-xs font-semibold uppercase tracking-wide text-primary">Revenue clarity</p>
-                <p className="mt-2 text-sm text-muted-foreground">
-                  Monitor launch-day sales in real time and capture recurring membership health without spreadsheets.
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-        </section>
-
-        <section className="rounded-3xl border border-primary/10 bg-card/80 p-10 text-center shadow-lg shadow-primary/10">
-          <h2 className="text-3xl font-semibold">Launch faster, write more</h2>
-          <p className="mt-4 text-sm text-muted-foreground">
+      {/* CTA Section */}
+      <section className="container py-20">
+        <div className="max-w-4xl mx-auto text-center bg-surface border border-stroke rounded-3xl p-16 shadow-2xl transition-all duration-300 hover:shadow-3xl">
+          <h2 className="text-5xl font-bold text-ink mb-6 transition-all duration-300 hover:opacity-90">Launch faster, write more</h2>
+          <p className="text-2xl text-charcoal mb-12 max-w-3xl mx-auto transition-colors duration-300 hover:text-charcoal/80">
             Wire AuthorStack to your storefronts this weekend. When the next book drops, the dashboard, launch plan, and
             reader touchpoints are already in motion.
           </p>
-          <div className="mt-6 flex flex-wrap justify-center gap-3">
-            <Button asChild size="lg">
-              <Link href="/auth/sign-up">Create your studio</Link>
-            </Button>
-            <Button asChild size="lg" variant="outline">
+          <div className="flex flex-wrap justify-center gap-6">
+            <button className="group relative inline-flex items-center justify-center px-10 py-5 overflow-hidden font-medium text-surface transition-all duration-300 bg-burgundy rounded-xl hover:bg-burgundy/90 hover:scale-105">
+              <span className="absolute inset-0 w-full h-full transition-all duration-300 ease-in-out bg-burgundy/90 opacity-0 group-hover:opacity-100"></span>
+              <span className="absolute bottom-0 right-0 block w-64 h-64 mb-32 mr-4 transition-all duration-500 ease-in-out transform translate-x-24 rotate-45 translate-y-24 bg-surface opacity-10 group-hover:translate-x-0"></span>
+              <span className="relative flex items-center text-xl font-semibold">
+                <Link href="/auth/sign-up">Create your studio</Link>
+              </span>
+            </button>
+            <Button asChild size="lg" variant="outline" className="border-stroke text-ink hover:bg-glass hover:scale-105 transition-all duration-300 text-lg px-8 py-5">
               <Link href="/docs">See how deployment works</Link>
             </Button>
           </div>
-        </section>
-    </PublicShell>
+        </div>
+      </section>
+    </div>
   );
 }

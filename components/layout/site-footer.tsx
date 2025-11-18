@@ -4,8 +4,8 @@ import { siteConfig } from "@/lib/config/site";
 
 export function SiteFooter() {
   return (
-    <footer className="border-t bg-background">
-      <div className="container flex flex-col gap-4 py-8 text-sm text-muted-foreground md:flex-row md:items-center md:justify-between">
+    <footer className="border-t bg-surface">
+      <div className="container flex flex-col gap-4 py-8 text-sm text-charcoal md:flex-row md:items-center md:justify-between">
         <p>
           © {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
         </p>

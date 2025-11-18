@@ -1,8 +1,9 @@
 import Link from "next/link";
+import type { Route } from "next";
 
 export const dynamic = "force-dynamic";
 
-import { DashboardShell } from "@/components/layout/dashboard-shell";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { requireAuth } from "@/lib/auth/session";
@@ -36,44 +37,76 @@ export default async function ConnectionsPage() {
     .order("created_at", { ascending: false });
 
   return (
-    <DashboardShell
-      title="Platform connections"
-      description="Authenticate sales channels so ingestion jobs can run automatically."
-    >
-      <div className="grid gap-4 md:grid-cols-2">
+    <div className="space-y-8">
+      {/* Page header */}
+      <div className="flex flex-col gap-2">
+        <h1 className="text-display text-ink">Platform Connections</h1>
+        <p className="text-body text-charcoal">
+          Connect your sales channels to automatically sync data with AuthorStack.
+        </p>
+      </div>
+
+      {/* Connection options */}
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {connectors.map((connector) => (
-          <Card key={connector.title}>
+          <Card key={connector.title} className="border-stroke bg-surface hover:bg-glass transition-colors">
             <CardHeader>
-              <CardTitle>{connector.title}</CardTitle>
-              <CardDescription>{connector.description}</CardDescription>
+              <CardTitle className="text-heading-2 text-ink">{connector.title}</CardTitle>
+              <CardDescription className="text-body text-charcoal">
+                {connector.description}
+              </CardDescription>
             </CardHeader>
             <CardContent>
-              <Button asChild>
-                <Link href={connector.href as any}>Configure</Link>
+              <Button asChild className="w-full bg-burgundy hover:bg-burgundy/90 text-surface">
+                <Link href={connector.href as Route}>Configure</Link>
               </Button>
             </CardContent>
           </Card>
         ))}
       </div>
-      <Card className="mt-6">
+
+      {/* Existing connections */}
+      <Card className="border-stroke bg-surface">
         <CardHeader>
-          <CardTitle>Existing connections</CardTitle>
-          <CardDescription>Status of each provider.</CardDescription>
+          <CardTitle className="text-heading-2 text-ink">Existing Connections</CardTitle>
+          <CardDescription className="text-body text-charcoal">
+            Status of each connected platform.
+          </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-3 text-sm">
+        <CardContent>
           {(existingConnections ?? []).length === 0 ? (
-            <p className="text-muted-foreground">No connections yet.</p>
+            <div className="text-center py-8">
+              <p className="text-body text-charcoal">No connections yet.</p>
+              <p className="text-small text-charcoal mt-2">
+                Connect a platform above to get started.
+              </p>
+            </div>
           ) : (
-            existingConnections?.map((connection) => (
-              <div key={connection.id} className="flex items-center justify-between rounded border px-3 py-2">
-                <span className="font-medium capitalize">{connection.provider}</span>
-                <span className="text-muted-foreground">{connection.status}</span>
-              </div>
-            ))
+            <div className="space-y-3">
+              {existingConnections?.map((connection) => (
+                <div 
+                  key={connection.id} 
+                  className="flex items-center justify-between p-4 rounded-lg border border-stroke bg-glass"
+                >
+                  <div>
+                    <p className="text-body font-medium text-ink capitalize">{connection.provider}</p>
+                    <p className="text-small text-charcoal">
+                      Connected on {new Date(connection.created_at).toLocaleDateString()}
+                    </p>
+                  </div>
+                  <Badge 
+                    variant={connection.status === "connected" ? "default" : "secondary"}
+                    className="text-small"
+                  >
+                    {connection.status}
+                  </Badge>
+                </div>
+              ))}
+            </div>
           )}
         </CardContent>
       </Card>
-    </DashboardShell>
+    </div>
   );
 }
 

@@ -18,18 +18,18 @@ type DashboardShellProps = {
 
 function DesktopSidebar() {
   return (
-    <aside className="hidden w-64 shrink-0 flex-col justify-between rounded-3xl border border-primary/10 bg-card/80 p-6 shadow-lg shadow-primary/5 lg:flex">
+    <aside className="hidden w-64 shrink-0 flex-col justify-between rounded-3xl border border-burgundy/10 bg-surface/80 p-6 shadow-lg shadow-burgundy/5 lg:flex">
       <div className="space-y-8">
         <div className="space-y-2">
-          <p className="text-xs font-semibold uppercase tracking-wide text-primary">Launch studio</p>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-xs font-semibold uppercase tracking-wide text-burgundy">Launch studio</p>
+          <p className="text-sm text-charcoal">
             Navigate ingestion jobs, platform connections, and launch automation.
           </p>
         </div>
         <DashboardNav />
       </div>
-      <div className="space-y-3 rounded-2xl border border-primary/10 bg-card/90 p-4 text-xs text-muted-foreground">
-        <p className="font-semibold text-primary">Need faster support?</p>
+      <div className="space-y-3 rounded-2xl border border-burgundy/10 bg-surface/90 p-4 text-xs text-charcoal">
+        <p className="font-semibold text-burgundy">Need faster support?</p>
         <p>
           Review the <Link href="/docs" className="underline">deployment guide</Link> or check
           <a
@@ -54,11 +54,11 @@ function MobileSidebar() {
           <Menu className="size-4" />
         </Button>
       </SheetTrigger>
-      <SheetContent side="left" className="w-full max-w-xs border-r border-primary/10 bg-card/90">
+      <SheetContent side="left" className="w-full max-w-xs border-r border-burgundy/10 bg-surface/90">
         <div className="space-y-6">
           <div className="space-y-1">
-            <p className="text-xs font-semibold uppercase tracking-wide text-primary">Launch studio</p>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-xs font-semibold uppercase tracking-wide text-burgundy">Launch studio</p>
+            <p className="text-sm text-charcoal">
               Access ingestion, platform connections, and launch automation.
             </p>
           </div>
@@ -74,17 +74,17 @@ export function DashboardShell({ title, description, children, toolbar }: Dashbo
     <div className="mx-auto flex w-full max-w-[1400px] flex-col gap-6 px-6 py-10 lg:flex-row">
       <DesktopSidebar />
       <section className="flex-1 space-y-6">
-        <div className="flex flex-col justify-between gap-4 rounded-3xl border border-primary/10 bg-card/80 p-6 shadow-lg shadow-primary/5 backdrop-blur sm:flex-row sm:items-center">
+        <div className="flex flex-col justify-between gap-4 rounded-3xl border border-burgundy/10 bg-surface/80 p-6 shadow-lg shadow-burgundy/5 backdrop-blur sm:flex-row sm:items-center">
           <div className="space-y-2">
-            <div className="flex items-center gap-3 text-xs uppercase tracking-wide text-muted-foreground">
-              <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-primary">
+            <div className="flex items-center gap-3 text-xs uppercase tracking-wide text-charcoal">
+              <span className="inline-flex items-center gap-2 rounded-full border border-burgundy/20 bg-burgundy/10 px-3 py-1 text-burgundy">
                 <CalendarDays className="size-3" /> AuthorStack Command Center
               </span>
             </div>
             <div>
-              <h1 className="text-3xl font-semibold leading-tight text-foreground sm:text-4xl">{title}</h1>
+              <h1 className="text-3xl font-semibold leading-tight text-ink sm:text-4xl">{title}</h1>
               {description ? (
-                <p className="mt-2 max-w-2xl text-sm text-muted-foreground">{description}</p>
+                <p className="mt-2 max-w-2xl text-sm text-charcoal">{description}</p>
               ) : null}
             </div>
           </div>
@@ -104,7 +104,7 @@ export function DashboardShell({ title, description, children, toolbar }: Dashbo
             <MobileSidebar />
           </div>
         </div>
-        <div className="space-y-6 rounded-3xl border border-primary/10 bg-background/95 p-6 shadow-lg shadow-primary/5">
+        <div className="space-y-6 rounded-3xl border border-burgundy/10 bg-surface/95 p-6 shadow-lg shadow-burgundy/5">
           {children}
         </div>
       </section>

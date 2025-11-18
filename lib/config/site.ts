@@ -7,6 +7,19 @@ export const siteConfig = {
     "A single pane of glass for indie authors: sales intelligence, launch readiness, and growth automations.",
   url: env.NEXT_PUBLIC_APP_URL,
   supportEmail: "support@authorstack.app",
+  keywords: [
+    "indie authors",
+    "book publishing",
+    "self-publishing",
+    "sales tracking",
+    "launch management",
+    "author tools",
+    "publishing dashboard",
+    "royalty tracking",
+    "book marketing",
+    "author productivity"
+  ],
+  author: "AuthorStack Team",
   links: {
     github: "https://github.com/authorstack",
     status: "https://status.authorstack.app",

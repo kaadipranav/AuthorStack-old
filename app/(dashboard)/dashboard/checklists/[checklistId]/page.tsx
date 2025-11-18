@@ -50,7 +50,7 @@ export default async function ChecklistDetailsPage({ params }: ChecklistDetailsP
           {(tasks ?? []).map((task) => (
             <div key={task.id} className="rounded-lg border p-3 text-sm">
               <p className="font-medium">{task.title}</p>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-charcoal">
                 Status: {task.status} • Due {task.due_date ?? "TBD"}
               </p>
             </div>

@@ -22,8 +22,8 @@ export function SignUpForm() {
   const statusStyles = useMemo<Record<FeedbackStatus, string>>(
     () => ({
       success: "border-emerald-200 bg-emerald-50 text-emerald-800 dark:border-emerald-900/60 dark:bg-emerald-950/60 dark:text-emerald-200",
-      error: "border-destructive/20 bg-destructive/10 text-destructive dark:border-destructive/40 dark:bg-destructive/15 dark:text-destructive-foreground",
-      info: "border-primary/20 bg-primary/10 text-primary dark:border-primary/20 dark:bg-primary/10 dark:text-primary-foreground",
+      error: "border-danger/20 bg-danger/10 text-danger dark:border-danger/40 dark:bg-danger/15 dark:text-surface",
+      info: "border-burgundy/20 bg-burgundy/10 text-burgundy dark:border-burgundy/20 dark:bg-burgundy/10 dark:text-surface",
     }),
     []
   );

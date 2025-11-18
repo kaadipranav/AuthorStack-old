@@ -18,9 +18,9 @@ export default function GlobalError({
   return (
     <div className="container flex min-h-[60vh] flex-col items-center justify-center gap-4 text-center">
       <div className="space-y-2">
-        <p className="text-xs font-semibold uppercase text-primary">Something went wrong</p>
+        <p className="text-xs font-semibold uppercase text-burgundy">Something went wrong</p>
         <h1 className="text-3xl font-semibold">We couldn&apos;t load this view.</h1>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-charcoal">
           Please try again or send the diagnostics code ({error.digest ?? "n/a"}) to the AuthorStack team.
         </p>
       </div>

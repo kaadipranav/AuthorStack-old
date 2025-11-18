@@ -20,8 +20,8 @@ export function DashboardNav() {
             className={clsx(
               "flex items-center rounded-lg px-3 py-2 text-sm font-medium transition-colors",
               isActive
-                ? "bg-primary/10 text-primary"
-                : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                ? "bg-burgundy/10 text-burgundy"
+                : "text-charcoal hover:bg-glass hover:text-ink"
             )}
           >
             {item.title}

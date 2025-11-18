@@ -65,7 +65,7 @@ export function BookForm({ mode = "create", bookId, defaultValues }: BookFormPro
         <select
           id="format"
           name="format"
-          className="h-10 w-full rounded-md border border-input bg-background px-3 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className="h-10 w-full rounded-lg border border-stroke bg-surface px-3 text-body shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-burgundy"
           defaultValue={defaultValues?.format ?? "ebook"}
         >
           {formatOptions.map((option) => (
@@ -80,7 +80,7 @@ export function BookForm({ mode = "create", bookId, defaultValues }: BookFormPro
         <select
           id="status"
           name="status"
-          className="h-10 w-full rounded-md border border-input bg-background px-3 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className="h-10 w-full rounded-lg border border-stroke bg-surface px-3 text-body shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-burgundy"
           defaultValue={defaultValues?.status ?? "draft"}
         >
           {statusOptions.map((option) => (
@@ -103,7 +103,7 @@ export function BookForm({ mode = "create", bookId, defaultValues }: BookFormPro
         <Label htmlFor="cover">Cover image</Label>
         <Input id="cover" name="cover" type="file" accept="image/*" />
       </div>
-      {message ? <p className="text-sm text-muted-foreground">{message}</p> : null}
+      {message ? <p className="text-sm text-charcoal">{message}</p> : null}
       <FormSubmit pendingLabel={mode === "create" ? "Creating..." : "Saving..."}>
         {mode === "create" ? "Create book" : "Save changes"}
       </FormSubmit>

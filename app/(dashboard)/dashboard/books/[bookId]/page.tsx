@@ -54,7 +54,7 @@ export default async function BookDetailsPage({ params }: BookDetailsPageProps) 
                 className="rounded-lg border object-cover"
               />
             ) : (
-              <p className="text-sm text-muted-foreground">No cover uploaded.</p>
+              <p className="text-sm text-charcoal">No cover uploaded.</p>
             )}
           </CardContent>
         </Card>

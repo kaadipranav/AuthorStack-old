@@ -16,19 +16,19 @@ export default function DashboardError({
   }, [error]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="w-full max-w-md space-y-4 rounded-lg border bg-card p-6 shadow-sm">
+    <div className="flex min-h-screen items-center justify-center bg-paper">
+      <div className="w-full max-w-md space-y-4 rounded-lg border bg-surface p-6 shadow-sm">
         <div className="flex items-center gap-3">
-          <AlertCircle className="size-6 text-destructive" />
+          <AlertCircle className="size-6 text-danger" />
           <h1 className="text-lg font-semibold">Something went wrong</h1>
         </div>
 
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-charcoal">
           {error.message || "An unexpected error occurred while loading your dashboard."}
         </p>
 
         {error.digest && (
-          <p className="text-xs text-muted-foreground">Error ID: {error.digest}</p>
+          <p className="text-xs text-charcoal">Error ID: {error.digest}</p>
         )}
 
         <div className="flex gap-2 pt-4">

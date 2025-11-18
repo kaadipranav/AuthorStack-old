@@ -2,7 +2,6 @@ import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 
-import { DashboardShell } from "@/components/layout/dashboard-shell";
 import { ProfileForm } from "@/components/forms/profile-form";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -20,15 +19,23 @@ export default async function ProfilePage() {
     .maybeSingle();
 
   return (
-    <DashboardShell
-      title="Profile"
-      description="Manage your account information and subscription tier."
-    >
-      <div className="grid gap-6 md:grid-cols-[1.1fr,0.9fr]">
-        <Card>
+    <div className="space-y-8">
+      {/* Page header */}
+      <div className="flex flex-col gap-2">
+        <h1 className="text-display text-ink">Profile Settings</h1>
+        <p className="text-body text-charcoal">
+          Manage your account information and subscription settings.
+        </p>
+      </div>
+
+      <div className="grid gap-6 lg:grid-cols-2">
+        {/* Account details */}
+        <Card className="border-stroke bg-surface">
           <CardHeader>
-            <CardTitle>Account details</CardTitle>
-            <CardDescription>Updates sync directly to Supabase profiles.</CardDescription>
+            <CardTitle className="text-heading-2 text-ink">Account Details</CardTitle>
+            <CardDescription className="text-body text-charcoal">
+              Update your personal information and preferences.
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <ProfileForm
@@ -40,30 +47,54 @@ export default async function ProfilePage() {
             />
           </CardContent>
         </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>Session</CardTitle>
-            <CardDescription>Signed in as {user.email}</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div>
-              <p className="text-sm font-medium">Email verified</p>
-              <p className="text-sm text-muted-foreground">
-                {user.email_confirmed_at ? "Yes" : "Pending verification"}
-              </p>
-            </div>
-            <form action={signOutAction}>
-              <Button variant="outline" type="submit">
-                Sign out
-              </Button>
-            </form>
-            <Button asChild variant="ghost" className="px-0">
-              <Link href="/auth/forgot-password">Reset password</Link>
-            </Button>
-          </CardContent>
-        </Card>
+
+        {/* Session and security */}
+        <div className="space-y-6">
+          <Card className="border-stroke bg-surface">
+            <CardHeader>
+              <CardTitle className="text-heading-2 text-ink">Session</CardTitle>
+              <CardDescription className="text-body text-charcoal">
+                Signed in as {user.email}
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div>
+                <p className="text-body font-medium text-ink">Email verified</p>
+                <p className="text-small text-charcoal">
+                  {user.email_confirmed_at ? "Yes" : "Pending verification"}
+                </p>
+              </div>
+              <div className="pt-2">
+                <Button asChild variant="outline" className="border-stroke text-ink hover:bg-glass w-full">
+                  <Link href="/auth/forgot-password">Reset password</Link>
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Sign out */}
+          <Card className="border-stroke bg-surface">
+            <CardHeader>
+              <CardTitle className="text-heading-2 text-ink">Sign Out</CardTitle>
+              <CardDescription className="text-body text-charcoal">
+                End your current session.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <form action={signOutAction}>
+                <Button 
+                  variant="outline" 
+                  type="submit"
+                  className="border-stroke text-ink hover:bg-glass w-full"
+                >
+                  Sign out
+                </Button>
+              </form>
+            </CardContent>
+          </Card>
+        </div>
       </div>
-    </DashboardShell>
+    </div>
   );
 }
 

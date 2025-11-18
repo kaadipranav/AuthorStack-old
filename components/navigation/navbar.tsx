@@ -32,7 +32,7 @@ export function Navbar() {
   const desktopNav = resolveNav(primaryNav);
 
   return (
-    <header className="border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="border-b bg-surface/80 backdrop-blur supports-[backdrop-filter]:bg-surface/60">
       <div className="container flex h-16 items-center justify-between gap-3">
         <div className="flex items-center gap-6">
           <Link href="/" className="flex items-center" aria-label="AuthorStack home">
@@ -60,12 +60,12 @@ export function Navbar() {
                   <NavigationMenuItem key={item.title}>
                     <NavigationMenuLink
                       asChild
-                      className="text-sm font-medium text-muted-foreground transition hover:text-foreground"
+                      className="text-sm font-medium text-charcoal transition hover:text-ink"
                     >
                       <Link href={item.href as any}>
                         {item.title}
                         {item.badge ? (
-                          <span className="ml-2 rounded-full bg-muted px-2 py-0.5 text-xs text-muted-foreground">
+                          <span className="ml-2 rounded-full bg-glass px-2 py-0.5 text-xs text-charcoal">
                             {item.badge}
                           </span>
                         ) : null}
@@ -83,7 +83,7 @@ export function Navbar() {
               key={item.title}
               variant="ghost"
               asChild
-              className="text-sm text-muted-foreground hover:text-foreground"
+              className="text-sm text-charcoal hover:text-ink"
             >
               <Link href={item.href as any} target={item.external ? "_blank" : undefined}>
                 {item.title}
@@ -122,7 +122,7 @@ function MobileNav() {
             <Link
               key={item.title}
               href={item.href as any}
-              className="text-base font-medium text-foreground"
+              className="text-base font-medium text-ink"
             >
               {item.title}
             </Link>

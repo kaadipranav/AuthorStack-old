@@ -51,7 +51,7 @@ export function ChecklistForm({
         <Label htmlFor="notes">Notes</Label>
         <Textarea id="notes" name="notes" defaultValue={defaultValues?.notes ?? ""} />
       </div>
-      {message ? <p className="text-sm text-muted-foreground">{message}</p> : null}
+      {message ? <p className="text-sm text-charcoal">{message}</p> : null}
       <FormSubmit pendingLabel={mode === "create" ? "Creating..." : "Updating..."}>
         {mode === "create" ? "Create checklist" : "Update checklist"}
       </FormSubmit>

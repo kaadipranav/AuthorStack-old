@@ -55,7 +55,7 @@ export function ProfileForm({ defaultValues }: ProfileFormProps) {
         <select
           id="subscription_tier"
           name="subscription_tier"
-          className="h-10 w-full rounded-md border border-input bg-background px-3 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className="h-10 w-full rounded-lg border border-stroke bg-surface px-3 text-body shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-burgundy"
           defaultValue={defaultValues.subscription_tier ?? "free"}
         >
           {subscriptionOptions.map((option) => (
@@ -65,7 +65,7 @@ export function ProfileForm({ defaultValues }: ProfileFormProps) {
           ))}
         </select>
       </div>
-      {message ? <p className="text-sm text-muted-foreground">{message}</p> : null}
+      {message ? <p className="text-sm text-charcoal">{message}</p> : null}
       <FormSubmit pendingLabel="Saving changes...">Save profile</FormSubmit>
     </form>
   );

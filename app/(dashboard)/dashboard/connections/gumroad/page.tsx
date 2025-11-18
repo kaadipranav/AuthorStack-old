@@ -20,7 +20,7 @@ export default function GumroadConnectionPage() {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-charcoal">
               Step 8 will wire this button to Gumroad&apos;s real consent screen. Today it simply
               returns JSON so you can validate routing.
             </p>
@@ -47,7 +47,7 @@ export default function GumroadConnectionPage() {
           <CardDescription>Send test payloads here until ingestion is wired up.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-3">
-          <code className="rounded bg-muted px-2 py-1 text-xs">
+          <code className="rounded bg-glass px-2 py-1 text-xs">
             /api/webhooks/platforms/gumroad
           </code>
           <Button asChild variant="outline">

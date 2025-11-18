@@ -20,7 +20,7 @@ export default function WhopConnectionPage() {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-charcoal">
               Use this to validate route wiring. The endpoint returns JSON with the generated state
               and callback path.
             </p>
@@ -49,7 +49,7 @@ export default function WhopConnectionPage() {
           <CardDescription>Use this POST endpoint for membership events.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-3">
-          <code className="rounded bg-muted px-2 py-1 text-xs">
+          <code className="rounded bg-glass px-2 py-1 text-xs">
             /api/webhooks/platforms/whop
           </code>
           <Button asChild variant="outline">
