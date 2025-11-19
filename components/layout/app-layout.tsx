@@ -93,14 +93,7 @@ function Sidebar({ isCollapsed }: { isCollapsed: boolean }) {
                   alt="AuthorStack logo"
                   fill
                   priority
-                  className="object-contain dark:hidden"
-                />
-                <Image
-                  src="/logos/Dark_logo.png"
-                  alt="AuthorStack logo"
-                  fill
-                  priority
-                  className="hidden object-contain dark:block"
+                  className="object-contain"
                 />
               </div>
             </div>
@@ -112,14 +105,7 @@ function Sidebar({ isCollapsed }: { isCollapsed: boolean }) {
                   alt="AuthorStack logo"
                   fill
                   priority
-                  className="object-contain dark:hidden"
-                />
-                <Image
-                  src="/logos/Dark_logo.png"
-                  alt="AuthorStack logo"
-                  fill
-                  priority
-                  className="hidden object-contain dark:block"
+                  className="object-contain"
                 />
               </div>
               <span className="text-heading-3 font-bold">AuthorStack</span>
@@ -199,14 +185,7 @@ function Topbar() {
                 alt="AuthorStack logo"
                 fill
                 priority
-                className="object-contain dark:hidden"
-              />
-              <Image
-                src="/logos/Dark_logo.png"
-                alt="AuthorStack logo"
-                fill
-                priority
-                className="hidden object-contain dark:block"
+                className="object-contain"
               />
             </div>
             <span className="text-heading-3 font-bold">AuthorStack</span>

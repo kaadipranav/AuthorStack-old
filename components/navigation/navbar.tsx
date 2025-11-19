@@ -42,14 +42,7 @@ export function Navbar() {
                 alt="AuthorStack logo"
                 fill
                 priority
-                className="object-contain dark:hidden"
-              />
-              <Image
-                src="/logos/Dark_logo.png"
-                alt="AuthorStack logo"
-                fill
-                priority
-                className="hidden object-contain dark:block"
+                className="object-contain"
               />
             </span>
           </Link>

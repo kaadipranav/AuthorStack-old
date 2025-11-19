@@ -16,8 +16,8 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
       hideAuthLinks
       mainClassName="flex min-h-[calc(100vh-160px)] flex-col justify-center gap-12 pb-24"
     >
-      <div className="grid gap-10 rounded-3xl border border-burgundy/10 bg-surface/80 p-6 shadow-2xl shadow-burgundy/10 transition-all duration-300 hover:shadow-3xl lg:grid-cols-[1.1fr,0.9fr] lg:p-10">
-        <aside className="relative hidden overflow-hidden rounded-2xl border border-burgundy/10 bg-gradient-to-br from-burgundy/10 via-burgundy/5 to-paper p-8 text-sm text-charcoal transition-all duration-300 hover:from-burgundy/15 hover:via-burgundy/10 lg:flex lg:flex-col lg:justify-between">
+      <div className="grid gap-10 rounded-3xl border border-burgundy/10 bg-surface/80 p-6 shadow-2xl shadow-burgundy/10 lg:grid-cols-[1.1fr,0.9fr] lg:p-10">
+        <aside className="relative hidden overflow-hidden rounded-2xl border border-burgundy/10 bg-gradient-to-br from-burgundy/10 via-burgundy/5 to-paper p-8 text-sm text-charcoal lg:flex lg:flex-col lg:justify-between">
           <div className="space-y-8">
             <div className="relative h-16 w-16 transition-transform duration-300 hover:scale-105">
               <Image
@@ -25,14 +25,7 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
                 alt="AuthorStack logo"
                 fill
                 priority
-                className="object-contain dark:hidden"
-              />
-              <Image
-                src="/logos/Dark_logo.png"
-                alt="AuthorStack logo"
-                fill
-                priority
-                className="hidden object-contain dark:block"
+                className="object-contain"
               />
             </div>
             <div className="space-y-4">

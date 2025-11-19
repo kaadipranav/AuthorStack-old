@@ -24,14 +24,7 @@ export function PublicShell({ children, mainClassName, hideAuthLinks = false }: 
                 alt="AuthorStack logo"
                 fill
                 priority
-                className="object-contain dark:hidden"
-              />
-              <Image
-                src="/logos/Dark_logo.png"
-                alt="AuthorStack logo"
-                fill
-                priority
-                className="hidden object-contain dark:block"
+                className="object-contain"
               />
             </div>
             <span className="text-sm font-semibold uppercase tracking-[0.2em] text-charcoal">AuthorStack</span>
