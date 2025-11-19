@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 
@@ -7,9 +8,67 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { deleteBookAction } from "@/lib/books/actions";
 import { listBooks } from "@/lib/books/service";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { requireAuth } from "@/lib/auth/session";
 
 export default async function BooksPage() {
-  const books = await listBooks();
+  let books = [];
+  
+  try {
+    books = await listBooks();
+  } catch (error: any) {
+    console.error("Books page error:", error);
+    
+    // Try to get more detailed error info
+    try {
+      const user = await requireAuth();
+      const supabase = await createSupabaseServerClient();
+      
+      // Test a simple query to see if the connection works
+      const { data, error: testError } = await supabase
+        .from("books")
+        .select("id, title")
+        .eq("profile_id", user.id)
+        .limit(1);
+        
+      if (testError) {
+        console.error("Test query error:", testError);
+        // If we get a specific error, we can show more details
+        return (
+          <div className="space-y-4">
+            <div className="rounded-lg border border-danger/50 bg-danger/10 p-4">
+              <div className="flex items-center gap-3">
+                <div>
+                  <h3 className="font-semibold">Failed to load books</h3>
+                  <p className="text-sm text-charcoal mt-1">
+                    Error code: {testError.code || 'Unknown'}
+                  </p>
+                  <p className="text-sm text-charcoal mt-1">
+                    Message: {testError.message}
+                  </p>
+                  {testError.hint && (
+                    <p className="text-sm text-charcoal mt-1">
+                      Hint: {testError.hint}
+                    </p>
+                  )}
+                  {testError.details && (
+                    <p className="text-sm text-charcoal mt-1">
+                      Details: {testError.details}
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      }
+    } catch (testError) {
+      console.error("Test connection error:", testError);
+    }
+    
+    // Re-throw the original error to use the error boundary
+    throw error;
+  }
 
   const statusBadge = (status: string) => {
     if (status.toLowerCase() === "published" || status.toLowerCase() === "live") {
