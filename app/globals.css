@@ -1,136 +1,199 @@
 /* Custom fonts */
-@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Inter:wght@300;400;600&family=JetBrains+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
 @import "tailwindcss";
 @import "tw-animate-css";
 
 @theme inline {
-  /* Custom color variables */
+  /* Refined color variables */
   --color-paper: #FAFAF9;
   --color-ink: #1A1A1A;
   --color-charcoal: #6B7280;
-  --color-burgundy: #9F1239;
+  --color-burgundy: #991B1B;
   --color-tannin: #6B3A2E;
   --color-forest: #1F6F4F;
   --color-amber: #C79B17;
   --color-danger: #B33A3A;
   --color-surface: #FFFFFF;
-  --color-glass: rgba(17,17,15,0.03);
-  --color-stroke: rgba(17,17,15,0.06);
-  
+  --color-surface-elevated: #FEFEFE;
+  --color-glass: rgba(17, 17, 15, 0.02);
+  --color-stroke: rgba(17, 17, 15, 0.08);
+  --color-stroke-subtle: rgba(17, 17, 15, 0.04);
+
   /* Font families */
   --font-heading: 'Merriweather', serif;
   --font-body: 'Inter', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
-  
-  /* Radius */
-  --radius-sm: 0.5rem; /* 8px */
-  --radius-md: 0.75rem; /* 12px */
-  --radius-lg: 1rem; /* 16px */
+
+  /* Refined radius */
+  --radius-sm: 0.5rem;
+  /* 8px */
+  --radius-md: 0.625rem;
+  /* 10px */
+  --radius-lg: 0.75rem;
+  /* 12px */
+  --radius-xl: 1rem;
+  /* 16px */
 }
 
 :root {
   /* Base colors */
   --background: var(--color-paper);
   --foreground: var(--color-ink);
-  
+
   /* Component colors */
   --card: var(--color-surface);
   --card-foreground: var(--color-ink);
   --popover: var(--color-surface);
   --popover-foreground: var(--color-ink);
-  
+
   /* Primary colors */
   --primary: var(--color-burgundy);
   --primary-foreground: var(--color-surface);
-  
+
   /* Secondary colors */
   --secondary: var(--color-paper);
   --secondary-foreground: var(--color-ink);
-  
+
   /* Muted colors */
   --muted: var(--color-glass);
   --muted-foreground: var(--color-charcoal);
-  
+
   /* Accent colors */
   --accent: var(--color-tannin);
   --accent-foreground: var(--color-surface);
-  
+
   /* Status colors */
   --success: var(--color-forest);
   --warning: var(--color-amber);
   --destructive: var(--color-danger);
-  
+
   /* Borders and inputs */
   --border: var(--color-stroke);
   --input: var(--color-stroke);
   --ring: var(--color-burgundy);
-  
+
   /* Radius */
-  --radius: 0.5rem; /* 8px */
+  --radius: 0.625rem;
+  /* 10px */
 }
 
 @layer base {
   * {
     @apply border-[--border];
   }
-  
+
   body {
-    @apply font-body leading-7;
+    @apply font-body leading-relaxed;
     background-color: var(--background);
     color: var(--foreground);
     font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
-  
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-heading tracking-[0.02em];
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-heading;
+    letter-spacing: -0.01em;
   }
-  
-  code, kbd, samp, pre {
+
+  code,
+  kbd,
+  samp,
+  pre {
     @apply font-mono;
+  }
+
+  /* Smooth transitions for all interactive elements */
+  button,
+  a,
+  input,
+  select,
+  textarea {
+    @apply transition-all duration-200 ease-in-out;
   }
 }
 
 @layer utilities {
   .container {
-    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
-  }
-  
-  /* Custom utility classes */
-  .text-display {
-    @apply text-5xl font-bold tracking-[-0.01em] leading-tight;
-  }
-  
-  .text-heading-1 {
-    @apply text-3xl font-bold leading-tight tracking-[0.01em];
-  }
-  
-  .text-heading-2 {
-    @apply text-2xl font-semibold leading-snug tracking-[0.01em];
-  }
-  
-  .text-heading-3 {
-    @apply text-xl font-semibold leading-snug tracking-[0.01em];
-  }
-  
-  .text-body-lg {
-    @apply text-lg leading-7;
-  }
-  
-  .text-body {
-    @apply text-base leading-7 text-[color:var(--color-ink)];
-  }
-  
-  .text-small {
-    @apply text-sm leading-6 text-[color:var(--color-charcoal)];
-  }
-  
-  .text-mini {
-    @apply text-xs leading-5 text-[color:var(--color-charcoal)];
+    @apply mx-auto w-full max-w-7xl px-6 sm:px-8 lg:px-10;
   }
 
-  /* Soft shadow utility for subtle depth */
+  /* Refined typography utilities */
+  .text-display {
+    @apply text-5xl font-bold tracking-[-0.02em] leading-[1.1];
+  }
+
+  .text-heading-1 {
+    @apply text-3xl font-semibold leading-tight tracking-[-0.01em];
+  }
+
+  .text-heading-2 {
+    @apply text-2xl font-semibold leading-snug tracking-[-0.01em];
+  }
+
+  .text-heading-3 {
+    @apply text-xl font-medium leading-snug tracking-[-0.005em];
+  }
+
+  .text-heading-4 {
+    @apply text-lg font-medium leading-snug;
+  }
+
+  .text-body-lg {
+    @apply text-lg leading-[1.6] font-normal;
+  }
+
+  .text-body {
+    @apply text-base leading-[1.6] text-[color:var(--color-ink)] font-normal;
+  }
+
+  .text-small {
+    @apply text-sm leading-[1.5] text-[color:var(--color-charcoal)] font-normal;
+  }
+
+  .text-mini {
+    @apply text-xs leading-[1.4] text-[color:var(--color-charcoal)] font-medium tracking-wide;
+  }
+
+  /* Premium shadow utilities */
   .shadow-soft {
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.10);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.10);
+  }
+
+  .shadow-soft-lg {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.04), 0 2px 4px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.08);
+  }
+
+  .shadow-soft-xl {
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.04), 0 4px 6px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.08);
+  }
+
+  /* Interactive states */
+  .hover-lift {
+    @apply transition-all duration-200 ease-out;
+  }
+
+  .hover-lift:hover {
+    @apply -translate-y-0.5;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.04), 0 2px 4px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.08);
+  }
+
+  .hover-scale {
+    @apply transition-transform duration-200 ease-out;
+  }
+
+  .hover-scale:hover {
+    transform: scale(1.02);
+  }
+
+  /* Focus states */
+  .focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-burgundy/20 focus:ring-offset-2 focus:ring-offset-paper;
   }
 }

@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { services } from "@/lib/services";
 import { requireAuth } from "@/lib/auth/session";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 const profileSchema = z.object({
     full_name: z.string().min(2),
@@ -28,34 +29,19 @@ export async function updateProfileAction(formData: FormData) {
     }
 
     try {
-        // Update user profile (subscription tier)
+        // Update subscription tier via UserService
         await services.user.updateProfile(user.id, {
             subscriptionTier: payload.data.subscription_tier,
         });
 
-        // Update user basic info (full name, avatar) - wait, UserService.updateProfile updates UserProfile.
-        // User basic info is in User object (auth).
-        // SupabaseUserRepository.updateProfile updates 'profiles' table.
-        // Does 'profiles' table contain full_name and avatar_url?
-        // Let's assume yes based on previous code.
-        // But my UserProfile interface has username, bio, website, subscriptionTier.
-        // It seems I missed full_name and avatar_url in UserProfile interface if they are stored in profiles table.
-        // OR they are stored in auth.users metadata?
-        // The previous code queried 'profiles' table and selected full_name, avatar_url.
-        // So they are in 'profiles' table.
-        // I should update UserProfile interface to include them.
-
-        // For now, I'll update the UserProfile interface in the next step.
-        // And update the repository to handle them.
-
-        await services.user.updateProfile(user.id, {
-            subscriptionTier: payload.data.subscription_tier,
-            // I need to update UserProfile interface first to support these.
+        // Update full_name and avatar_url in auth.users metadata
+        const supabase = await createSupabaseServerClient();
+        await supabase.auth.updateUser({
+            data: {
+                full_name: payload.data.full_name,
+                avatar_url: payload.data.avatar_url || null,
+            },
         });
-
-        // Wait, I can't update them if they are not in the interface.
-        // I'll update the interface in the next step.
-
     } catch (error: any) {
         return { success: false, message: error.message };
     }

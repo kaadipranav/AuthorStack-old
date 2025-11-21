@@ -34,7 +34,7 @@ export default async function DashboardHomePage() {
     {
       title: "Gross Revenue",
       value: `$${totalAmount.toLocaleString(undefined, { minimumFractionDigits: 2 })}`,
-      change: "+0%", // Placeholder for now as we don't have historical comparison yet
+      change: "+0%",
       trend: "up",
       description: "vs last 30 days",
     },
@@ -54,7 +54,7 @@ export default async function DashboardHomePage() {
     },
     {
       title: "Page Reads",
-      value: "0", // Placeholder
+      value: "0",
       change: "+0%",
       trend: "up",
       description: "Across platforms",
@@ -65,126 +65,140 @@ export default async function DashboardHomePage() {
   const recentBooks = myBooks.slice(0, 5).map(book => ({
     id: book.id,
     title: book.title,
-    author: "Me", // We might want to fetch profile name
-    revenue: 0, // We need to aggregate revenue per book, currently not in BookService.getMyBooks
+    author: "Me",
+    revenue: 0,
     units: 0,
-    platforms: [book.format], // Placeholder
+    platforms: [book.format],
     cover: book.coverPath || "/placeholder-cover.jpg",
   }));
 
   return (
-    <div className="space-y-8">
-      {/* Page header */}
-      <div className="flex flex-col gap-2">
+    <div className="space-y-10">
+      {/* Page header with refined spacing */}
+      <div className="flex flex-col gap-3">
         <h1 className="text-display text-ink">Command Center</h1>
-        <p className="text-body text-charcoal">
+        <p className="text-body-lg text-charcoal max-w-3xl">
           Monitor revenue, ingestion health, launch readiness, and subscriber activity from one control surface.
         </p>
       </div>
 
-      {/* KPI Strip */}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {/* KPI Strip - Premium polish */}
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {kpiMetrics.map((metric) => (
-          <Card key={metric.title} className="border-stroke bg-surface">
-            <CardHeader className="pb-2">
-              <CardDescription className="text-small text-charcoal">
+          <Card
+            key={metric.title}
+            className="group border border-stroke bg-surface shadow-soft rounded-lg overflow-hidden transition-all duration-200 hover:-translate-y-1 hover:shadow-lg cursor-pointer"
+          >
+            <CardHeader className="pb-3 pt-6 px-6">
+              <CardDescription className="text-mini text-charcoal uppercase tracking-wider font-medium">
                 {metric.title}
               </CardDescription>
             </CardHeader>
-            <CardContent>
-              <div className="flex items-baseline justify-between">
-                <p className="text-heading-2 font-bold text-ink">{metric.value}</p>
+            <CardContent className="space-y-3 px-6 pb-6">
+              <div className="flex items-baseline justify-between gap-3">
+                <p className="text-heading-1 text-ink">{metric.value}</p>
                 <Badge
                   variant={metric.trend === "up" ? "default" : "secondary"}
-                  className="text-mini"
+                  className="text-xs px-2.5 py-0.5 font-medium"
                 >
-                  {metric.trend === "up" ? "▲" : "▼"} {metric.change}
+                  {metric.change}
                 </Badge>
               </div>
-              <p className="text-mini text-charcoal mt-1">{metric.description}</p>
+              <p className="text-small text-charcoal/70">{metric.description}</p>
             </CardContent>
           </Card>
         ))}
       </div>
 
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
         {/* Main content area */}
-        <div className="lg:col-span-2 space-y-6">
-          {/* Revenue Card */}
-          <Card className="border-stroke bg-surface">
-            <CardHeader>
+        <div className="lg:col-span-2 space-y-8">
+          {/* Revenue Card - Enhanced */}
+          <Card className="border border-stroke bg-surface shadow-soft rounded-lg overflow-hidden">
+            <CardHeader className="pb-6 pt-6 px-6">
               <div className="flex items-center justify-between">
                 <div>
                   <CardTitle className="text-heading-2 text-ink">Revenue Overview</CardTitle>
-                  <CardDescription className="text-body text-charcoal">
+                  <CardDescription className="text-small text-charcoal mt-1">
                     Last 30 days performance
                   </CardDescription>
                 </div>
                 <div className="flex gap-2">
-                  <Button variant="outline" size="sm">7d</Button>
-                  <Button size="sm">30d</Button>
-                  <Button variant="outline" size="sm">90d</Button>
+                  <Button variant="outline" size="sm" className="text-xs px-3 h-8">7d</Button>
+                  <Button size="sm" className="text-xs px-3 h-8 bg-burgundy hover:bg-burgundy/90">30d</Button>
+                  <Button variant="outline" size="sm" className="text-xs px-3 h-8">90d</Button>
                 </div>
               </div>
             </CardHeader>
-            <CardContent>
+            <CardContent className="px-6 pb-6">
               {/* Placeholder for revenue chart */}
-              <div className="h-64 rounded-lg bg-glass border border-stroke flex items-center justify-center">
-                <p className="text-charcoal">Revenue chart visualization</p>
+              <div className="h-64 rounded-lg bg-glass/50 border border-stroke/50 flex items-center justify-center backdrop-blur-sm">
+                <p className="text-charcoal text-sm font-medium">Revenue chart visualization</p>
               </div>
-              <div className="mt-4 grid grid-cols-3 gap-4">
-                <div className="p-3 rounded-lg bg-glass border border-stroke">
-                  <p className="text-small text-charcoal">KDP</p>
-                  <p className="text-heading-3 font-semibold text-ink">$0</p>
+              <div className="mt-6 grid grid-cols-3 gap-4">
+                <div className="group p-4 rounded-lg bg-glass/50 border border-stroke/50 transition-all duration-200 hover:shadow-soft hover:border-stroke cursor-pointer">
+                  <p className="text-mini text-charcoal uppercase tracking-wide font-medium mb-1">KDP</p>
+                  <p className="text-heading-3 text-ink mb-0.5">$0</p>
                   <p className="text-mini text-success">--</p>
                 </div>
-                <div className="p-3 rounded-lg bg-glass border border-stroke">
-                  <p className="text-small text-charcoal">Gumroad</p>
-                  <p className="text-heading-3 font-semibold text-ink">$0</p>
+                <div className="group p-4 rounded-lg bg-glass/50 border border-stroke/50 transition-all duration-200 hover:shadow-soft hover:border-stroke cursor-pointer">
+                  <p className="text-mini text-charcoal uppercase tracking-wide font-medium mb-1">Gumroad</p>
+                  <p className="text-heading-3 text-ink mb-0.5">$0</p>
                   <p className="text-mini text-success">--</p>
                 </div>
-                <div className="p-3 rounded-lg bg-glass border border-stroke">
-                  <p className="text-small text-charcoal">Whop</p>
-                  <p className="text-heading-3 font-semibold text-ink">$0</p>
+                <div className="group p-4 rounded-lg bg-glass/50 border border-stroke/50 transition-all duration-200 hover:shadow-soft hover:border-stroke cursor-pointer">
+                  <p className="text-mini text-charcoal uppercase tracking-wide font-medium mb-1">Whop</p>
+                  <p className="text-heading-3 text-ink mb-0.5">$0</p>
                   <p className="text-mini text-amber">--</p>
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          {/* Books Table */}
-          <Card className="border-stroke bg-surface">
-            <CardHeader>
+          {/* Books Table - Enhanced */}
+          <Card className="border border-stroke bg-surface shadow-soft rounded-lg overflow-hidden">
+            <CardHeader className="pb-6 pt-6 px-6">
               <div className="flex items-center justify-between">
                 <div>
                   <CardTitle className="text-heading-2 text-ink">Top Performing Books</CardTitle>
-                  <CardDescription className="text-body text-charcoal">
+                  <CardDescription className="text-small text-charcoal mt-1">
                     Last 30 days revenue
                   </CardDescription>
                 </div>
-                <Button asChild>
+                <Button asChild size="sm" className="bg-burgundy hover:bg-burgundy/90 text-xs h-9 px-4">
                   <Link href="/dashboard/books">View all books</Link>
                 </Button>
               </div>
             </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
+            <CardContent className="px-6 pb-6">
+              <div className="space-y-3">
                 {recentBooks.length === 0 ? (
-                  <p className="text-charcoal text-center py-8">No books found. Create your first book!</p>
+                  <div className="text-center py-12">
+                    <p className="text-charcoal mb-4">No books found. Create your first book!</p>
+                    <Button asChild size="sm" className="bg-burgundy hover:bg-burgundy/90">
+                      <Link href="/dashboard/books/new">Create Book</Link>
+                    </Button>
+                  </div>
                 ) : (
                   recentBooks.map((book) => (
-                    <div key={book.id} className="flex items-center justify-between p-4 rounded-lg border border-stroke hover:bg-glass transition-colors">
+                    <div
+                      key={book.id}
+                      className="group flex items-center justify-between p-4 rounded-lg border border-stroke/50 hover:border-stroke hover:bg-glass/30 transition-all duration-200 cursor-pointer hover:shadow-soft"
+                    >
                       <div className="flex items-center gap-4">
-                        <div className="w-12 h-16 rounded bg-glass border border-stroke flex items-center justify-center overflow-hidden">
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          {book.cover ? <img src={book.cover} alt={book.title} className="w-full h-full object-cover" /> : <span className="text-mini text-charcoal">Cover</span>}
+                        <div className="w-12 h-16 rounded bg-glass border border-stroke flex items-center justify-center overflow-hidden shadow-sm">
+                          {book.cover ? (
+                            <img src={book.cover} alt={book.title} className="w-full h-full object-cover" />
+                          ) : (
+                            <span className="text-mini text-charcoal">Cover</span>
+                          )}
                         </div>
                         <div>
-                          <p className="text-body font-medium text-ink">{book.title}</p>
+                          <p className="text-body font-medium text-ink group-hover:text-burgundy transition-colors">{book.title}</p>
                           <p className="text-small text-charcoal">{book.author}</p>
-                          <div className="flex gap-2 mt-1">
+                          <div className="flex gap-2 mt-1.5">
                             {book.platforms.map((platform) => (
-                              <Badge key={platform} variant="secondary" className="text-mini">
+                              <Badge key={platform} variant="secondary" className="text-xs px-2 py-0.5 font-medium">
                                 {platform}
                               </Badge>
                             ))}
@@ -192,7 +206,7 @@ export default async function DashboardHomePage() {
                         </div>
                       </div>
                       <div className="text-right">
-                        <p className="text-heading-3 font-semibold text-ink">${book.revenue}</p>
+                        <p className="text-heading-3 text-ink">${book.revenue}</p>
                         <p className="text-small text-charcoal">{book.units} units</p>
                       </div>
                     </div>
@@ -204,58 +218,65 @@ export default async function DashboardHomePage() {
         </div>
 
         {/* Right insights rail */}
-        <div className="space-y-6">
-          {/* Upcoming Tasks */}
-          <Card className="border-stroke bg-surface">
-            <CardHeader>
-              <CardTitle className="text-heading-2 text-ink">Upcoming Tasks</CardTitle>
-              <CardDescription className="text-body text-charcoal">
+        <div className="space-y-8">
+          {/* Upcoming Tasks - Enhanced */}
+          <Card className="border border-stroke bg-surface shadow-soft rounded-lg overflow-hidden">
+            <CardHeader className="pb-6 pt-6 px-6">
+              <CardTitle className="text-heading-3 text-ink">Upcoming Tasks</CardTitle>
+              <CardDescription className="text-small text-charcoal mt-1">
                 Launch checklist items due soon
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 px-6 pb-6">
               {upcomingTasks.length === 0 ? (
-                <p className="text-charcoal text-center py-4">No upcoming tasks.</p>
+                <div className="text-center py-8">
+                  <p className="text-small text-charcoal mb-3">No upcoming tasks.</p>
+                  <Button asChild variant="outline" size="sm" className="text-xs h-8">
+                    <Link href="/dashboard/checklists">Create Checklist</Link>
+                  </Button>
+                </div>
               ) : (
                 upcomingTasks.map((task) => (
-                  <div key={task.id} className="p-4 rounded-lg border border-stroke hover:bg-glass transition-colors">
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <p className="text-body font-medium text-ink">{task.title}</p>
-                        <p className="text-small text-charcoal">Checklist Item</p>
+                  <div
+                    key={task.id}
+                    className="group p-4 rounded-lg border border-stroke/50 hover:border-stroke hover:bg-glass/30 transition-all duration-200 cursor-pointer"
+                  >
+                    <div className="flex items-start justify-between mb-2">
+                      <div className="flex-1">
+                        <p className="text-body font-medium text-ink group-hover:text-burgundy transition-colors">{task.title}</p>
+                        <p className="text-small text-charcoal mt-0.5">Checklist Item</p>
                       </div>
                       <Badge
                         variant={task.priority === "high" ? "default" : task.priority === "medium" ? "secondary" : "outline"}
-                        className="text-mini"
+                        className="text-xs px-2 py-0.5 font-medium ml-2"
                       >
                         {task.priority}
                       </Badge>
                     </div>
-                    <p className="text-small text-charcoal mt-2">Due: {task.dueDate ? task.dueDate.toLocaleDateString() : 'No date'}</p>
+                    <p className="text-small text-charcoal">Due: {task.dueDate ? task.dueDate.toLocaleDateString() : 'No date'}</p>
                   </div>
                 ))
               )}
-              <Button asChild variant="outline" className="w-full">
+              <Button asChild variant="outline" className="w-full text-xs h-9">
                 <Link href="/dashboard/checklists">View all tasks</Link>
               </Button>
             </CardContent>
           </Card>
 
-          {/* Leaderboard Snippet */}
-          <Card className="border-stroke bg-surface">
-            <CardHeader>
-              <CardTitle className="text-heading-2 text-ink">Author Leaderboard</CardTitle>
-              <CardDescription className="text-body text-charcoal">
+          {/* Leaderboard Snippet - Enhanced */}
+          <Card className="border border-stroke bg-surface shadow-soft rounded-lg overflow-hidden">
+            <CardHeader className="pb-6 pt-6 px-6">
+              <CardTitle className="text-heading-3 text-ink">Author Leaderboard</CardTitle>
+              <CardDescription className="text-small text-charcoal mt-1">
                 Top performers this month
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-3">
-              {/* Placeholder for Leaderboard */}
-              <div className="flex items-center justify-between p-3 rounded-lg bg-glass border border-stroke">
+            <CardContent className="space-y-3 px-6 pb-6">
+              <div className="group flex items-center justify-between p-3 rounded-lg bg-glass/50 border border-stroke/50 hover:border-stroke transition-all duration-200 cursor-pointer">
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-burgundy flex items-center justify-center text-surface text-mini font-bold">1</div>
+                  <div className="w-8 h-8 rounded-full bg-burgundy flex items-center justify-center text-surface text-xs font-bold shadow-soft">1</div>
                   <div>
-                    <p className="text-body font-medium text-ink">Sarah Johnson</p>
+                    <p className="text-body font-medium text-ink group-hover:text-burgundy transition-colors">Sarah Johnson</p>
                     <p className="text-mini text-charcoal">Romance Author</p>
                   </div>
                 </div>
@@ -264,30 +285,29 @@ export default async function DashboardHomePage() {
                   <p className="text-mini text-charcoal">units</p>
                 </div>
               </div>
-              <Button asChild variant="ghost" className="w-full px-0 text-burgundy hover:text-burgundy">
+              <Button asChild variant="ghost" className="w-full px-0 text-burgundy hover:text-burgundy/80 hover:bg-transparent text-xs h-8">
                 <Link href="/dashboard/books">View full leaderboard →</Link>
               </Button>
             </CardContent>
           </Card>
 
-          {/* Competitor Price Moves */}
-          <Card className="border-stroke bg-surface">
-            <CardHeader>
-              <CardTitle className="text-heading-2 text-ink">Competitor Insights</CardTitle>
-              <CardDescription className="text-body text-charcoal">
+          {/* Competitor Price Moves - Enhanced */}
+          <Card className="border border-stroke bg-surface shadow-soft rounded-lg overflow-hidden">
+            <CardHeader className="pb-6 pt-6 px-6">
+              <CardTitle className="text-heading-3 text-ink">Competitor Insights</CardTitle>
+              <CardDescription className="text-small text-charcoal mt-1">
                 Recent price changes
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-3">
-              {/* Placeholder for Competitors */}
-              <div className="p-3 rounded-lg border border-stroke">
-                <div className="flex items-center justify-between">
-                  <p className="text-body text-ink">"The Silent Garden"</p>
-                  <Badge variant="secondary" className="text-mini">▼ 15%</Badge>
+            <CardContent className="space-y-3 px-6 pb-6">
+              <div className="group p-3 rounded-lg border border-stroke/50 hover:border-stroke hover:bg-glass/30 transition-all duration-200 cursor-pointer">
+                <div className="flex items-center justify-between mb-1">
+                  <p className="text-body text-ink group-hover:text-burgundy transition-colors">"The Silent Garden"</p>
+                  <Badge variant="secondary" className="text-xs px-2 py-0.5 font-medium">▼ 15%</Badge>
                 </div>
-                <p className="text-small text-charcoal mt-1">Dropped to $2.99</p>
+                <p className="text-small text-charcoal">Dropped to $2.99</p>
               </div>
-              <Button asChild variant="ghost" className="w-full px-0 text-burgundy hover:text-burgundy">
+              <Button asChild variant="ghost" className="w-full px-0 text-burgundy hover:text-burgundy/80 hover:bg-transparent text-xs h-8">
                 <Link href="/dashboard/connections">Track competitors →</Link>
               </Button>
             </CardContent>
@@ -297,4 +317,3 @@ export default async function DashboardHomePage() {
     </div>
   );
 }
-

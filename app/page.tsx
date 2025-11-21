@@ -126,29 +126,30 @@ export default function Home() {
                 authors the cockpit they need to grow every series and membership.
               </p>
             </div>
-            
+
             <div className="flex flex-wrap gap-5">
-              <button className="group relative inline-flex items-center justify-center px-8 py-4 overflow-hidden font-medium text-surface transition-all duration-300 bg-burgundy rounded-lg hover:bg-burgundy/90 hover:scale-105">
+              <Link
+                href="/auth/sign-up"
+                className="group relative inline-flex items-center justify-center px-8 py-4 overflow-hidden font-medium text-surface transition-all duration-300 bg-burgundy rounded-lg hover:bg-burgundy/90 hover:scale-105"
+              >
                 <span className="absolute inset-0 w-full h-full transition-all duration-300 ease-in-out bg-burgundy/90 opacity-0 group-hover:opacity-100"></span>
                 <span className="absolute bottom-0 right-0 block w-64 h-64 mb-32 mr-4 transition-all duration-500 ease-in-out transform translate-x-24 rotate-45 translate-y-24 bg-surface opacity-10 group-hover:translate-x-0"></span>
                 <span className="relative flex items-center text-lg font-semibold">
-                  <Link href="/auth/sign-up" className="flex items-center">
-                    Create your studio
-                    <ArrowRight className="ml-3 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
-                  </Link>
+                  Create your studio
+                  <ArrowRight className="ml-3 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
                 </span>
-              </button>
+              </Link>
               <Button asChild size="lg" variant="outline" className="border-stroke text-ink hover:bg-glass hover:scale-105 transition-all duration-300">
                 <Link href="/auth/sign-in">I already have an account</Link>
               </Button>
             </div>
-            
+
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 pt-10">
               {heroFeatures.map((feature) => {
                 const Icon = feature.icon;
                 return (
-                  <div 
-                    key={feature.title} 
+                  <div
+                    key={feature.title}
                     className="text-center group cursor-pointer transition-all duration-300 hover:-translate-y-2"
                   >
                     <div className="mx-auto w-16 h-16 rounded-full bg-burgundy/10 flex items-center justify-center mb-4 transition-all duration-300 group-hover:bg-burgundy/20 group-hover:scale-110">
@@ -161,7 +162,7 @@ export default function Home() {
               })}
             </div>
           </div>
-          
+
           <div className="hidden lg:block relative">
             <div className="absolute inset-0 bg-burgundy/5 rounded-3xl transform rotate-3 transition-all duration-500 hover:rotate-6"></div>
             <div className="relative bg-surface border border-stroke rounded-3xl p-8 shadow-2xl transition-all duration-300 hover:shadow-3xl">
@@ -201,11 +202,11 @@ export default function Home() {
             AuthorStack brings together all the tools indie authors need to manage their publishing business.
           </p>
         </div>
-        
+
         <div className="grid gap-10 md:grid-cols-3">
           {valueProps.map((prop) => (
-            <Card 
-              key={prop.title} 
+            <Card
+              key={prop.title}
               className="border-stroke bg-surface h-full transition-all duration-300 hover:-translate-y-3 hover:shadow-xl"
             >
               <CardHeader>
@@ -227,11 +228,11 @@ export default function Home() {
             <p className="text-2xl text-charcoal mb-12 max-w-3xl transition-colors duration-300 hover:text-charcoal/80">
               Everything you need to run a book launch — minus the chaos.
             </p>
-            
+
             <div className="space-y-8">
               {featureHighlights.map((feature) => (
-                <div 
-                  key={feature.title} 
+                <div
+                  key={feature.title}
                   className="p-8 rounded-2xl border border-stroke bg-glass transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
                 >
                   <h3 className="text-3xl text-ink mb-4 transition-colors duration-300 hover:text-burgundy">{feature.title}</h3>
@@ -247,7 +248,7 @@ export default function Home() {
               ))}
             </div>
           </div>
-          
+
           <div className="space-y-8">
             <Card className="border-stroke bg-surface transition-all duration-300 hover:shadow-xl">
               <CardHeader>
@@ -256,8 +257,8 @@ export default function Home() {
               </CardHeader>
               <CardContent className="space-y-8">
                 {testimonials.map((testimonial) => (
-                  <blockquote 
-                    key={testimonial.name} 
+                  <blockquote
+                    key={testimonial.name}
                     className="p-7 rounded-xl border border-stroke bg-glass transition-all duration-300 hover:shadow-lg"
                   >
                     <p className="text-lg italic text-ink mb-4 transition-colors duration-300 hover:text-charcoal">“{testimonial.quote}”</p>
@@ -268,7 +269,7 @@ export default function Home() {
                 ))}
               </CardContent>
             </Card>
-            
+
             <Card className="border-stroke bg-surface transition-all duration-300 hover:shadow-xl">
               <CardHeader>
                 <CardTitle className="text-3xl">Production-ready in a weekend</CardTitle>
