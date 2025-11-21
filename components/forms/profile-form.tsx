@@ -5,7 +5,7 @@ import { useState } from "react";
 import { FormSubmit } from "@/components/forms/form-submit";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { updateProfileAction } from "@/lib/profiles/actions";
+import { updateProfileAction } from "@/app/(dashboard)/dashboard/profile/actions";
 
 type ProfileFormProps = {
   defaultValues: {

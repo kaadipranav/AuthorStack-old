@@ -1,0 +1,37 @@
+import { SupabaseUserRepository } from "./modules/user/infrastructure/supabase-repository";
+import { UserService } from "./modules/user/application/user-service";
+import { SupabaseBookRepository, SupabaseSalesRepository } from "./modules/book/infrastructure/supabase-repository";
+import { BookService, SalesService } from "./modules/book/application/book-service";
+import { MockAgentRepository } from "./modules/agent/infrastructure/mock-repository";
+import { AgentService } from "./modules/agent/application/agent-service";
+import { MockCommunityRepository } from "./modules/community/infrastructure/mock-repository";
+import { CommunityService } from "./modules/community/application/community-service";
+import { SupabaseLaunchRepository } from "./modules/launch/infrastructure/supabase-repository";
+import { LaunchService } from "./modules/launch/application/launch-service";
+
+// Singleton instances (lazy initialization could be better but this is simple for now)
+const userRepository = new SupabaseUserRepository();
+const userService = new UserService(userRepository);
+
+const bookRepository = new SupabaseBookRepository();
+const salesRepository = new SupabaseSalesRepository();
+const bookService = new BookService(bookRepository);
+const salesService = new SalesService(salesRepository);
+
+const agentRepository = new MockAgentRepository();
+const agentService = new AgentService(agentRepository);
+
+const communityRepository = new MockCommunityRepository();
+const communityService = new CommunityService(communityRepository);
+
+const launchRepository = new SupabaseLaunchRepository();
+const launchService = new LaunchService(launchRepository);
+
+export const services = {
+    user: userService,
+    book: bookService,
+    sales: salesService,
+    agent: agentService,
+    community: communityService,
+    launch: launchService,
+};

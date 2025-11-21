@@ -6,7 +6,7 @@ import { FormSubmit } from "@/components/forms/form-submit";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { createBookAction, updateBookAction } from "@/lib/books/actions";
+import { createBookAction, updateBookAction } from "@/app/(dashboard)/dashboard/books/actions";
 
 type BookFormProps = {
   mode?: "create" | "edit";

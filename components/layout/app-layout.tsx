@@ -82,9 +82,9 @@ function Sidebar({ isCollapsed }: { isCollapsed: boolean }) {
   const pathname = usePathname();
   
   return (
-    <div className={`h-full border-r border-stroke bg-surface ${isCollapsed ? 'w-14' : 'w-60'} transition-all duration-300`}>
+    <div className={`h-full border-r border-stroke bg-surface ${isCollapsed ? 'w-16' : 'w-72'} transition-all duration-300`}>
       <div className="flex h-full flex-col">
-        <div className="p-4 border-b border-stroke">
+        <div className="p-5 border-b border-stroke">
           {isCollapsed ? (
             <div className="flex items-center justify-center">
               <div className="relative h-8 w-8 transition-transform duration-300 hover:scale-105">
@@ -113,8 +113,8 @@ function Sidebar({ isCollapsed }: { isCollapsed: boolean }) {
           )}
         </div>
         
-        <nav className="flex-1 overflow-y-auto py-4">
-          <ul className="space-y-1 px-2">
+        <nav className="flex-1 overflow-y-auto py-5">
+          <ul className="space-y-1.5 px-3">
             {navigationItems.map((item) => {
               const Icon = item.icon;
               const isActive = pathname === item.href;
@@ -123,14 +123,16 @@ function Sidebar({ isCollapsed }: { isCollapsed: boolean }) {
                 <li key={item.name}>
                   <Link
                     href={item.href as Route}
-                    className={`flex items-center gap-3 rounded-lg px-3 py-2 text-small transition-colors ${
+                    className={`relative flex items-center gap-3 rounded-md px-3.5 py-2.5 text-small transition-all duration-200 ease-[cubic-bezier(.2,.9,.2,1)] ${
                       isActive 
-                        ? 'bg-burgundy text-surface font-medium' 
-                        : 'text-ink hover:bg-glass'
+                        ? 'bg-burgundy/10 text-ink font-medium shadow-soft' 
+                        : 'text-ink hover:bg-glass hover:shadow-soft'
                     }`}
                   >
+                    {isActive && <span className="absolute left-0 top-1/2 -translate-y-1/2 h-5 w-1.5 rounded-r bg-burgundy" />}
                     <Icon className="h-5 w-5" />
                     {!isCollapsed && <span>{item.name}</span>}
+                    
                     {isCollapsed && (
                       <div className="absolute left-16 bg-surface border border-stroke px-2 py-1 rounded-lg shadow-lg text-small whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
                         {item.name}
@@ -143,12 +145,12 @@ function Sidebar({ isCollapsed }: { isCollapsed: boolean }) {
           </ul>
         </nav>
         
-        <div className="p-4 border-t border-stroke">
+        <div className="p-5 border-t border-stroke">
           <form action={signOutAction}>
             <Button 
               variant="ghost" 
               size="sm" 
-              className="w-full justify-start gap-3 px-3 py-2 text-small"
+              className="w-full justify-start gap-3 px-3.5 py-2.5 text-small"
               type="submit"
             >
               <LogOut className="h-5 w-5" />
@@ -173,7 +175,7 @@ function Topbar() {
                 <Menu className="h-5 w-5" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="w-60 p-0">
+            <SheetContent side="left" className="w-72 p-0">
               <Sidebar isCollapsed={false} />
             </SheetContent>
           </Sheet>
@@ -198,7 +200,7 @@ function Topbar() {
             <input
               type="search"
               placeholder="Search books, launches, sales..."
-              className="w-full rounded-lg bg-glass border border-stroke py-2 pl-10 pr-4 text-small focus:outline-none focus:ring-2 focus:ring-burgundy focus:border-burgundy"
+              className="w-full rounded-lg bg-glass border border-stroke py-2.5 pl-10 pr-4 text-small focus:outline-none focus:ring-2 focus:ring-burgundy/40 focus:border-burgundy"
             />
           </div>
           
@@ -238,9 +240,9 @@ function MobileNav() {
             <Link
               key={item.name}
               href={item.href as Route}
-              className={`flex flex-col items-center gap-1 rounded-lg px-2 py-3 text-mini transition-colors ${
+              className={`flex flex-col items-center gap-1 rounded-lg px-2 py-3 text-mini transition-all duration-200 ease-[cubic-bezier(.2,.9,.2,1)] ${
                 isActive 
-                  ? 'bg-burgundy text-surface' 
+                  ? 'bg-burgundy/10 text-ink' 
                   : 'text-ink hover:bg-glass'
               }`}
             >
@@ -302,8 +304,8 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
         </div>
         
         {/* Main content area - full width on mobile, adjusted on desktop */}
-        <main className="flex-1 pb-16 md:pb-0">
-          <div className="container py-6">
+        <main className="flex-1 pb-20 md:pb-0">
+          <div className="container py-8 lg:py-10">
             {children}
           </div>
         </main>

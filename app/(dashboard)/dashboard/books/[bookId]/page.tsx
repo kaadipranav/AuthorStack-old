@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 
 import { DashboardShell } from "@/components/layout/dashboard-shell";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { getBook } from "@/lib/books/service";
+import { services } from "@/lib/services";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 type BookDetailsPageProps = {
@@ -11,14 +11,15 @@ type BookDetailsPageProps = {
 };
 
 export default async function BookDetailsPage({ params }: BookDetailsPageProps) {
-  const book = await getBook(params.bookId);
+  const book = await services.book.getBookById(params.bookId);
+
   if (!book) {
     notFound();
   }
 
   const supabase = await createSupabaseServerClient();
-  const coverUrl = book.cover_path
-    ? supabase.storage.from("book-covers").getPublicUrl(book.cover_path).data.publicUrl
+  const coverUrl = book.coverPath
+    ? supabase.storage.from("book-covers").getPublicUrl(book.coverPath).data.publicUrl
     : null;
 
   return (
@@ -35,7 +36,7 @@ export default async function BookDetailsPage({ params }: BookDetailsPageProps) 
           <CardContent className="space-y-2 text-sm">
             <p>Status: {book.status}</p>
             <p>Format: {book.format}</p>
-            <p>Launch date: {book.launch_date ?? "TBD"}</p>
+            <p>Launch date: {book.launchDate ? book.launchDate.toLocaleDateString() : "TBD"}</p>
             <p>{book.subtitle}</p>
             <p>{book.description}</p>
           </CardContent>

@@ -7,16 +7,15 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { signOutAction } from "@/lib/auth/actions";
 import { requireAuth } from "@/lib/auth/session";
-import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { services } from "@/lib/services";
 
 export default async function ProfilePage() {
-  const user = await requireAuth();
-  const supabase = await createSupabaseServerClient();
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("*")
-    .eq("id", user.id)
-    .maybeSingle();
+  const user = await services.user.getCurrentUser();
+  if (!user) {
+    // Handle unauthenticated state if requireAuth doesn't catch it (though it should)
+    return null;
+  }
+  const profile = await services.user.getCurrentProfile();
 
   return (
     <div className="space-y-8">
@@ -40,9 +39,9 @@ export default async function ProfilePage() {
           <CardContent>
             <ProfileForm
               defaultValues={{
-                full_name: profile?.full_name ?? user.email ?? "",
-                avatar_url: profile?.avatar_url ?? null,
-                subscription_tier: profile?.subscription_tier ?? "free",
+                full_name: user.fullName ?? "",
+                avatar_url: user.avatarUrl ?? null,
+                subscription_tier: profile?.subscriptionTier ?? "free",
               }}
             />
           </CardContent>
@@ -61,7 +60,7 @@ export default async function ProfilePage() {
               <div>
                 <p className="text-body font-medium text-ink">Email verified</p>
                 <p className="text-small text-charcoal">
-                  {user.email_confirmed_at ? "Yes" : "Pending verification"}
+                  {user.emailVerified ? "Yes" : "Pending verification"}
                 </p>
               </div>
               <div className="pt-2">
@@ -82,8 +81,8 @@ export default async function ProfilePage() {
             </CardHeader>
             <CardContent>
               <form action={signOutAction}>
-                <Button 
-                  variant="outline" 
+                <Button
+                  variant="outline"
                   type="submit"
                   className="border-stroke text-ink hover:bg-glass w-full"
                 >

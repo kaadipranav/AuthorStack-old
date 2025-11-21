@@ -6,67 +6,18 @@ export const dynamic = "force-dynamic";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { deleteBookAction } from "@/lib/books/actions";
-import { listBooks } from "@/lib/books/service";
-import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { deleteBookAction } from "./actions";
+import { services } from "@/lib/services";
 import { requireAuth } from "@/lib/auth/session";
 
 export default async function BooksPage() {
+  const user = await requireAuth();
   let books = [];
-  
+
   try {
-    books = await listBooks();
+    books = await services.book.getMyBooks(user.id);
   } catch (error: any) {
     console.error("Books page error:", error);
-    
-    // Try to get more detailed error info
-    try {
-      const user = await requireAuth();
-      const supabase = await createSupabaseServerClient();
-      
-      // Test a simple query to see if the connection works
-      const { data, error: testError } = await supabase
-        .from("books")
-        .select("id, title")
-        .eq("profile_id", user.id)
-        .limit(1);
-        
-      if (testError) {
-        console.error("Test query error:", testError);
-        // If we get a specific error, we can show more details
-        return (
-          <div className="space-y-4">
-            <div className="rounded-lg border border-danger/50 bg-danger/10 p-4">
-              <div className="flex items-center gap-3">
-                <div>
-                  <h3 className="font-semibold">Failed to load books</h3>
-                  <p className="text-sm text-charcoal mt-1">
-                    Error code: {testError.code || 'Unknown'}
-                  </p>
-                  <p className="text-sm text-charcoal mt-1">
-                    Message: {testError.message}
-                  </p>
-                  {testError.hint && (
-                    <p className="text-sm text-charcoal mt-1">
-                      Hint: {testError.hint}
-                    </p>
-                  )}
-                  {testError.details && (
-                    <p className="text-sm text-charcoal mt-1">
-                      Details: {testError.details}
-                    </p>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        );
-      }
-    } catch (testError) {
-      console.error("Test connection error:", testError);
-    }
-    
-    // Re-throw the original error to use the error boundary
     throw error;
   }
 
@@ -144,7 +95,7 @@ export default async function BooksPage() {
             <h2 className="text-heading-2 text-ink">Your Books</h2>
             <p className="text-small text-charcoal">{books.length} books</p>
           </div>
-          
+
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
             {books.map((book) => (
               <Card key={book.id} className="border-stroke bg-surface hover:bg-glass transition-colors">
@@ -153,7 +104,7 @@ export default async function BooksPage() {
                     <div>
                       <CardTitle className="text-heading-3 text-ink">{book.title}</CardTitle>
                       <CardDescription className="text-small text-charcoal mt-1">
-                        Format: {book.format} • Launch {book.launch_date ?? "TBD"}
+                        Format: {book.format} • Launch {book.launchDate ? book.launchDate.toLocaleDateString() : "TBD"}
                       </CardDescription>
                     </div>
                     {statusBadge(book.status)}
