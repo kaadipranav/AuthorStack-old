@@ -1,4 +1,4 @@
-export type PlatformProvider = "amazon_kdp" | "gumroad" | "whop" | "shopify";
+export type PlatformProvider = "amazon_kdp" | "gumroad" | "whop" | "shopify" | "payhip" | "lulu";
 
 export interface PlatformConnection {
   id: string;

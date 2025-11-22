@@ -199,6 +199,111 @@ export async function handleDraft2DigitalIngestion(job: IngestionJob): Promise<I
   }
 }
 
+export async function handlePayhipIngestion(job: IngestionJob): Promise<IngestionResult> {
+  try {
+    console.log(`[Payhip] Processing ingestion for profile ${job.profile_id}`);
+
+    const { fetchAllPayhipSales } = await import("@/lib/platforms/payhip");
+    const { createSupabaseServiceClient } = await import("@/lib/supabase/service");
+
+    const sales = await fetchAllPayhipSales();
+    const supabase = await createSupabaseServiceClient();
+
+    let salesEventsCreated = 0;
+
+    for (const sale of sales) {
+      // Only process completed sales
+      if (sale.status !== "completed") continue;
+
+      const { error } = await supabase.from("sales_events").insert({
+        profile_id: job.profile_id,
+        platform: "payhip",
+        event_type: "sale",
+        quantity: sale.quantity,
+        amount: sale.price,
+        currency: sale.currency,
+        occurred_at: new Date(sale.created_at).toISOString(),
+        raw_payload: sale,
+      });
+
+      if (!error) {
+        salesEventsCreated++;
+      }
+    }
+
+    console.log(`[Payhip] ✓ Created ${salesEventsCreated} sales events`);
+
+    return {
+      success: true,
+      jobId: job.id,
+      message: `Payhip ingestion completed: ${salesEventsCreated} events`,
+      salesEventsCreated,
+    };
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : "Unknown error";
+    console.error("[Payhip] Ingestion error:", errorMessage);
+    return {
+      success: false,
+      jobId: job.id,
+      message: "Payhip ingestion failed",
+      error: errorMessage,
+    };
+  }
+}
+
+export async function handleLuluIngestion(job: IngestionJob): Promise<IngestionResult> {
+  try {
+    console.log(`[Lulu] Processing ingestion for profile ${job.profile_id}`);
+
+    const { fetchAllLuluPrintJobs } = await import("@/lib/platforms/lulu");
+    const { createSupabaseServiceClient } = await import("@/lib/supabase/service");
+
+    const printJobs = await fetchAllLuluPrintJobs();
+    const supabase = await createSupabaseServiceClient();
+
+    let salesEventsCreated = 0;
+
+    for (const printJob of printJobs) {
+      // Only process shipped print jobs as sales
+      if (printJob.status !== "SHIPPED") continue;
+
+      const { error } = await supabase.from("sales_events").insert({
+        profile_id: job.profile_id,
+        platform: "lulu",
+        event_type: "sale",
+        quantity: printJob.quantity,
+        amount: printJob.cost.total_cost_incl_tax,
+        currency: "USD", // Lulu typically uses USD
+        occurred_at: new Date(printJob.created_at).toISOString(),
+        raw_payload: printJob,
+      });
+
+      if (!error) {
+        salesEventsCreated++;
+      }
+    }
+
+    console.log(`[Lulu] ✓ Created ${salesEventsCreated} sales events`);
+
+    return {
+      success: true,
+      jobId: job.id,
+      message: `Lulu ingestion completed: ${salesEventsCreated} print jobs`,
+      salesEventsCreated,
+    };
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : "Unknown error";
+    console.error("[Lulu] Ingestion error:", errorMessage);
+    return {
+      success: false,
+      jobId: job.id,
+      message: "Lulu ingestion failed",
+      error: errorMessage,
+    };
+  }
+}
+
+
 export async function getHandlerForPlatform(
   platform: IngestionPlatform
 ): Promise<(job: IngestionJob) => Promise<IngestionResult>> {
@@ -211,6 +316,10 @@ export async function getHandlerForPlatform(
       return handleSmashwordsIngestion;
     case "draft2digital":
       return handleDraft2DigitalIngestion;
+    case "payhip":
+      return handlePayhipIngestion;
+    case "lulu":
+      return handleLuluIngestion;
     default:
       throw new Error(`Unknown platform: ${platform}`);
   }

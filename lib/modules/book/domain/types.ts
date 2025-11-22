@@ -17,7 +17,7 @@ export interface Book {
 export interface SalesEvent {
     id: string;
     profileId: string;
-    platform: 'amazon_kdp' | 'gumroad' | 'smashwords' | 'draft2digital';
+    platform: 'amazon_kdp' | 'gumroad' | 'smashwords' | 'draft2digital' | 'payhip' | 'lulu';
     eventType: 'sale' | 'refund';
     quantity: number;
     amount: number;

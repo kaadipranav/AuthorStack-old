@@ -23,5 +23,17 @@ export const integrationVendors = [
     description: "Transactional email for onboarding, alerts, and digests.",
     url: "https://resend.com",
   },
+  {
+    name: "Payhip",
+    category: "Sales Platform",
+    description: "E-commerce platform for selling digital and physical products directly.",
+    url: "https://payhip.com",
+  },
+  {
+    name: "Lulu",
+    category: "Print-on-Demand",
+    description: "Print API for automated book printing and fulfillment services.",
+    url: "https://lulu.com",
+  },
 ];
 
