@@ -70,3 +70,43 @@ export async function uploadKdpReportAction(formData: FormData): Promise<ActionR
   return { success: true, message: "Report uploaded. Ingestion job queued." };
 }
 
+/**
+ * Generic CSV upload action for any platform
+ * Works for: Kobo, Apple Books, Google Play, Barnes & Noble, etc.
+ */
+export async function uploadCsvReportAction(
+  formData: FormData,
+  platform: string
+): Promise<ActionResponse> {
+  const user = await requireAuth();
+  const supabase = await createSupabaseServerClient();
+
+  const file = formData.get("file") as File | null;
+  if (!file) {
+    return { success: false, message: "Please attach a CSV file." };
+  }
+
+  // Use platform-specific bucket naming
+  const bucketName = `${platform}-uploads`;
+
+  const { error: uploadError, data } = await supabase.storage
+    .from(bucketName)
+    .upload(`${user.id}/${crypto.randomUUID()}-${file.name}`, file, {
+      contentType: file.type || "text/csv",
+      upsert: false,
+    });
+
+  if (uploadError) {
+    return { success: false, message: uploadError.message };
+  }
+
+  await supabase.from("ingestion_jobs").insert({
+    profile_id: user.id,
+    platform,
+    status: "pending",
+    payload: { storagePath: data?.path },
+  });
+
+  return { success: true, message: `${platform} report uploaded. Ingestion job queued.` };
+}
+

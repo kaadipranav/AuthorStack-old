@@ -21,6 +21,36 @@ const connectors: Array<{ title: string; description: string; href: string }> = 
     href: "/dashboard/connections/gumroad",
   },
   {
+    title: "Payhip",
+    description: "Connect your Payhip account to sync sales from digital and physical products.",
+    href: "/dashboard/connections/payhip",
+  },
+  {
+    title: "Lulu",
+    description: "Track print-on-demand orders and calculate profit margins from Lulu.",
+    href: "/dashboard/connections/lulu",
+  },
+  {
+    title: "Kobo Writing Life",
+    description: "Upload CSV reports from Kobo to sync ebook sales data.",
+    href: "/dashboard/connections/kobo",
+  },
+  {
+    title: "Apple Books",
+    description: "Upload iTunes Connect sales reports to track Apple Books sales.",
+    href: "/dashboard/connections/apple-books",
+  },
+  {
+    title: "Google Play Books",
+    description: "Upload Partner Center CSV reports to sync Google Play sales.",
+    href: "/dashboard/connections/google-play",
+  },
+  {
+    title: "Barnes & Noble Press",
+    description: "Upload B&N Press sales reports to track Nook sales.",
+    href: "/dashboard/connections/bn-press",
+  },
+  {
     title: "Whop",
     description: "Manage memberships and upgrade/downgrade events.",
     href: "/dashboard/connections/whop",
@@ -84,8 +114,8 @@ export default async function ConnectionsPage() {
           ) : (
             <div className="space-y-3">
               {existingConnections?.map((connection) => (
-                <div 
-                  key={connection.id} 
+                <div
+                  key={connection.id}
                   className="flex items-center justify-between p-4 rounded-lg border border-stroke bg-glass"
                 >
                   <div>
@@ -94,7 +124,7 @@ export default async function ConnectionsPage() {
                       Connected on {new Date(connection.created_at).toLocaleDateString()}
                     </p>
                   </div>
-                  <Badge 
+                  <Badge
                     variant={connection.status === "connected" ? "default" : "secondary"}
                     className="text-small"
                   >

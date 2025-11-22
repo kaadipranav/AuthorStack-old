@@ -303,6 +303,321 @@ export async function handleLuluIngestion(job: IngestionJob): Promise<IngestionR
   }
 }
 
+export async function handleKoboIngestion(job: IngestionJob): Promise<IngestionResult> {
+  try {
+    const { storagePath } = job.payload as { storagePath?: string };
+
+    if (!storagePath) {
+      return {
+        success: false,
+        jobId: job.id,
+        message: "Missing storage path for Kobo CSV",
+        error: "MISSING_STORAGE_PATH",
+      };
+    }
+
+    console.log(`[Kobo] Processing ingestion for profile ${job.profile_id}`);
+
+    const { createSupabaseServiceClient } = await import("@/lib/supabase/service");
+    const supabase = await createSupabaseServiceClient();
+
+    const { data, error: downloadError } = await supabase.storage
+      .from("kobo-uploads")
+      .download(storagePath);
+
+    if (downloadError || !data) {
+      return {
+        success: false,
+        jobId: job.id,
+        message: "Failed to download CSV",
+        error: downloadError?.message || "DOWNLOAD_FAILED",
+      };
+    }
+
+    const csv = await data.text();
+    const lines = csv.split("\n");
+    const headers = lines[0].split(",").map((h) => h.trim());
+    let salesEventsCreated = 0;
+
+    for (let i = 1; i < lines.length; i++) {
+      if (!lines[i].trim()) continue;
+      const values = lines[i].split(",").map((v) => v.trim());
+      const row: Record<string, string> = {};
+      headers.forEach((header, idx) => {
+        row[header] = values[idx] || "";
+      });
+
+      const quantity = parseInt(row["Units"] || row["units"] || "0");
+      const amount = parseFloat(row["Revenue"] || row["revenue"] || "0");
+
+      if (quantity > 0) {
+        const { error: insertError } = await supabase.from("sales_events").insert({
+          profile_id: job.profile_id,
+          platform: "kobo",
+          event_type: "sale",
+          quantity,
+          amount,
+          currency: row["Currency"] || "USD",
+          occurred_at: new Date(row["Date"] || new Date()).toISOString(),
+          raw_payload: row,
+        });
+        if (!insertError) salesEventsCreated++;
+      }
+    }
+
+    console.log(`[Kobo] ✓ Created ${salesEventsCreated} sales events`);
+    return {
+      success: true,
+      jobId: job.id,
+      message: `Kobo CSV parsed: ${salesEventsCreated} events`,
+      salesEventsCreated,
+    };
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : "Unknown error";
+    console.error("[Kobo] Ingestion error:", errorMessage);
+    return {
+      success: false,
+      jobId: job.id,
+      message: "Kobo ingestion failed",
+      error: errorMessage,
+    };
+  }
+}
+
+export async function handleAppleBooksIngestion(job: IngestionJob): Promise<IngestionResult> {
+  try {
+    const { storagePath } = job.payload as { storagePath?: string };
+    if (!storagePath) {
+      return {
+        success: false,
+        jobId: job.id,
+        message: "Missing storage path for Apple Books CSV",
+        error: "MISSING_STORAGE_PATH",
+      };
+    }
+
+    console.log(`[Apple Books] Processing ingestion for profile ${job.profile_id}`);
+    const { createSupabaseServiceClient } = await import("@/lib/supabase/service");
+    const supabase = await createSupabaseServiceClient();
+    const { data, error: downloadError } = await supabase.storage
+      .from("apple_books-uploads")
+      .download(storagePath);
+
+    if (downloadError || !data) {
+      return {
+        success: false,
+        jobId: job.id,
+        message: "Failed to download CSV",
+        error: downloadError?.message || "DOWNLOAD_FAILED",
+      };
+    }
+
+    const csv = await data.text();
+    const lines = csv.split("\n");
+    const headers = lines[0].split(",").map((h) => h.trim());
+    let salesEventsCreated = 0;
+
+    for (let i = 1; i < lines.length; i++) {
+      if (!lines[i].trim()) continue;
+      const values = lines[i].split(",").map((v) => v.trim());
+      const row: Record<string, string> = {};
+      headers.forEach((header, idx) => {
+        row[header] = values[idx] || "";
+      });
+
+      const quantity = parseInt(row["Units"] || row["Units Sold"] || "0");
+      const amount = parseFloat(row["Proceeds"] || row["Royalty"] || "0");
+
+      if (quantity > 0) {
+        const { error: insertError } = await supabase.from("sales_events").insert({
+          profile_id: job.profile_id,
+          platform: "apple_books",
+          event_type: "sale",
+          quantity,
+          amount,
+          currency: "USD",
+          occurred_at: new Date(row["Report Date"] || row["Date"] || new Date()).toISOString(),
+          raw_payload: row,
+        });
+        if (!insertError) salesEventsCreated++;
+      }
+    }
+
+    console.log(`[Apple Books] ✓ Created ${salesEventsCreated} sales events`);
+    return {
+      success: true,
+      jobId: job.id,
+      message: `Apple Books CSV parsed: ${salesEventsCreated} events`,
+      salesEventsCreated,
+    };
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : "Unknown error";
+    console.error("[Apple Books] Ingestion error:", errorMessage);
+    return {
+      success: false,
+      jobId: job.id,
+      message: "Apple Books ingestion failed",
+      error: errorMessage,
+    };
+  }
+}
+
+export async function handleGooglePlayIngestion(job: IngestionJob): Promise<IngestionResult> {
+  try {
+    const { storagePath } = job.payload as { storagePath?: string };
+    if (!storagePath) {
+      return {
+        success: false,
+        jobId: job.id,
+        message: "Missing storage path for Google Play CSV",
+        error: "MISSING_STORAGE_PATH",
+      };
+    }
+
+    console.log(`[Google Play] Processing ingestion for profile ${job.profile_id}`);
+    const { createSupabaseServiceClient } = await import("@/lib/supabase/service");
+    const supabase = await createSupabaseServiceClient();
+    const { data, error: downloadError } = await supabase.storage
+      .from("google_play-uploads")
+      .download(storagePath);
+
+    if (downloadError || !data) {
+      return {
+        success: false,
+        jobId: job.id,
+        message: "Failed to download CSV",
+        error: downloadError?.message || "DOWNLOAD_FAILED",
+      };
+    }
+
+    const csv = await data.text();
+    const lines = csv.split("\n");
+    const headers = lines[0].split(",").map((h) => h.trim());
+    let salesEventsCreated = 0;
+
+    for (let i = 1; i < lines.length; i++) {
+      if (!lines[i].trim()) continue;
+      const values = lines[i].split(",").map((v) => v.trim());
+      const row: Record<string, string> = {};
+      headers.forEach((header, idx) => {
+        row[header] = values[idx] || "";
+      });
+
+      const quantity = parseInt(row["Quantity"] || row["Units"] || "0");
+      const amount = parseFloat(row["Buyer Revenue"] || row["Revenue"] || "0");
+
+      if (quantity > 0) {
+        const { error: insertError } = await supabase.from("sales_events").insert({
+          profile_id: job.profile_id,
+          platform: "google_play",
+          event_type: "sale",
+          quantity,
+          amount,
+          currency: row["Currency"] || "USD",
+          occurred_at: new Date(row["Transaction Date"] || row["Date"] || new Date()).toISOString(),
+          raw_payload: row,
+        });
+        if (!insertError) salesEventsCreated++;
+      }
+    }
+
+    console.log(`[Google Play] ✓ Created ${salesEventsCreated} sales events`);
+    return {
+      success: true,
+      jobId: job.id,
+      message: `Google Play CSV parsed: ${salesEventsCreated} events`,
+      salesEventsCreated,
+    };
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : "Unknown error";
+    console.error("[Google Play] Ingestion error:", errorMessage);
+    return {
+      success: false,
+      jobId: job.id,
+      message: "Google Play ingestion failed",
+      error: errorMessage,
+    };
+  }
+}
+
+export async function handleBarnesNobleIngestion(job: IngestionJob): Promise<IngestionResult> {
+  try {
+    const { storagePath } = job.payload as { storagePath?: string };
+    if (!storagePath) {
+      return {
+        success: false,
+        jobId: job.id,
+        message: "Missing storage path for B&N CSV",
+        error: "MISSING_STORAGE_PATH",
+      };
+    }
+
+    console.log(`[Barnes & Noble] Processing ingestion for profile ${job.profile_id}`);
+    const { createSupabaseServiceClient } = await import("@/lib/supabase/service");
+    const supabase = await createSupabaseServiceClient();
+    const { data, error: downloadError } = await supabase.storage
+      .from("bn_press-uploads")
+      .download(storagePath);
+
+    if (downloadError || !data) {
+      return {
+        success: false,
+        jobId: job.id,
+        message: "Failed to download CSV",
+        error: downloadError?.message || "DOWNLOAD_FAILED",
+      };
+    }
+
+    const csv = await data.text();
+    const lines = csv.split("\n");
+    const headers = lines[0].split(",").map((h) => h.trim());
+    let salesEventsCreated = 0;
+
+    for (let i = 1; i < lines.length; i++) {
+      if (!lines[i].trim()) continue;
+      const values = lines[i].split(",").map((v) => v.trim());
+      const row: Record<string, string> = {};
+      headers.forEach((header, idx) => {
+        row[header] = values[idx] || "";
+      });
+
+      const quantity = parseInt(row["Net Units"] || row["Units Sold"] || "0");
+      const amount = parseFloat(row["Royalty"] || row["Earnings"] || "0");
+
+      if (quantity > 0) {
+        const { error: insertError } = await supabase.from("sales_events").insert({
+          profile_id: job.profile_id,
+          platform: "bn_press",
+          event_type: "sale",
+          quantity,
+          amount,
+          currency: "USD",
+          occurred_at: new Date(row["Sale Date"] || row["Date"] || new Date()).toISOString(),
+          raw_payload: row,
+        });
+        if (!insertError) salesEventsCreated++;
+      }
+    }
+
+    console.log(`[Barnes & Noble] ✓ Created ${salesEventsCreated} sales events`);
+    return {
+      success: true,
+      jobId: job.id,
+      message: `B&N CSV parsed: ${salesEventsCreated} events`,
+      salesEventsCreated,
+    };
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : "Unknown error";
+    console.error("[Barnes & Noble] Ingestion error:", errorMessage);
+    return {
+      success: false,
+      jobId: job.id,
+      message: "B&N ingestion failed",
+      error: errorMessage,
+    };
+  }
+}
+
 
 export async function getHandlerForPlatform(
   platform: IngestionPlatform
@@ -320,6 +635,14 @@ export async function getHandlerForPlatform(
       return handlePayhipIngestion;
     case "lulu":
       return handleLuluIngestion;
+    case "kobo":
+      return handleKoboIngestion;
+    case "apple_books":
+      return handleAppleBooksIngestion;
+    case "google_play":
+      return handleGooglePlayIngestion;
+    case "bn_press":
+      return handleBarnesNobleIngestion;
     default:
       throw new Error(`Unknown platform: ${platform}`);
   }

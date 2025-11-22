@@ -1,5 +1,5 @@
 export type IngestionJobStatus = 'pending' | 'processing' | 'completed' | 'failed' | 'retrying';
-export type IngestionPlatform = 'amazon_kdp' | 'gumroad' | 'smashwords' | 'draft2digital' | 'payhip' | 'lulu';
+export type IngestionPlatform = 'amazon_kdp' | 'gumroad' | 'smashwords' | 'draft2digital' | 'payhip' | 'lulu' | 'kobo' | 'apple_books' | 'google_play' | 'bn_press';
 
 export interface IngestionJob {
   id: string;
