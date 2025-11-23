@@ -12,6 +12,7 @@ import { SupabaseCompetitorRepository } from "./modules/competitor/infrastructur
 import { CompetitorService } from "./modules/competitor/application/competitor-service";
 import { SupabaseInsightsRepository } from "./modules/insights/infrastructure/supabase-repository";
 import { InsightsService } from "./modules/insights/application/insights-service";
+import { AnalyticsService, FunnelService, PricingService } from "./modules/analytics/application/analytics-service";
 
 // Singleton instances (lazy initialization could be better but this is simple for now)
 const userRepository = new SupabaseUserRepository();
@@ -37,6 +38,10 @@ const competitorService = new CompetitorService(competitorRepository);
 const insightsRepository = new SupabaseInsightsRepository();
 const insightsService = new InsightsService(insightsRepository);
 
+const analyticsService = new AnalyticsService();
+const funnelService = new FunnelService();
+const pricingService = new PricingService();
+
 export const services = {
     user: userService,
     book: bookService,
@@ -46,4 +51,7 @@ export const services = {
     launch: launchService,
     competitor: competitorService,
     insights: insightsService,
+    analytics: analyticsService,
+    funnel: funnelService,
+    pricing: pricingService,
 };
