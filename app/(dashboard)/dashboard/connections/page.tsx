@@ -8,52 +8,88 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { requireAuth } from "@/lib/auth/session";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { 
+  ShoppingCart, 
+  ShoppingBag, 
+  CreditCard, 
+  Book, 
+  BookOpen, 
+  Apple, 
+  Globe, 
+  Store,
+  Users,
+  ChevronRight
+} from "lucide-react";
 
-const connectors: Array<{ title: string; description: string; href: string }> = [
+const connectors: Array<{ 
+  title: string; 
+  description: string; 
+  href: string;
+  icon: React.ElementType;
+  color: string;
+}> = [
   {
     title: "Amazon KDP",
     description: "Upload CSVs or connect OAuth to sync Kindle Direct Publishing data.",
     href: "/dashboard/connections/amazon-kdp",
+    icon: ShoppingCart,
+    color: "text-orange-600",
   },
   {
     title: "Gumroad",
     description: "OAuth with Gumroad to ingest SKU-level sales and refunds.",
     href: "/dashboard/connections/gumroad",
+    icon: ShoppingBag,
+    color: "text-pink-600",
   },
   {
     title: "Payhip",
     description: "Connect your Payhip account to sync sales from digital and physical products.",
     href: "/dashboard/connections/payhip",
+    icon: CreditCard,
+    color: "text-blue-600",
   },
   {
     title: "Lulu",
     description: "Track print-on-demand orders and calculate profit margins from Lulu.",
     href: "/dashboard/connections/lulu",
+    icon: Book,
+    color: "text-red-600",
   },
   {
     title: "Kobo Writing Life",
     description: "Upload CSV reports from Kobo to sync ebook sales data.",
     href: "/dashboard/connections/kobo",
+    icon: BookOpen,
+    color: "text-teal-600",
   },
   {
     title: "Apple Books",
     description: "Upload iTunes Connect sales reports to track Apple Books sales.",
     href: "/dashboard/connections/apple-books",
+    icon: Apple,
+    color: "text-gray-700",
   },
   {
     title: "Google Play Books",
     description: "Upload Partner Center CSV reports to sync Google Play sales.",
     href: "/dashboard/connections/google-play",
+    icon: Globe,
+    color: "text-green-600",
   },
   {
     title: "Barnes & Noble Press",
     description: "Upload B&N Press sales reports to track Nook sales.",
     href: "/dashboard/connections/bn-press",
+    icon: Store,
+    color: "text-emerald-700",
   },
   {
     title: "Whop",
     description: "Manage memberships and upgrade/downgrade events.",
     href: "/dashboard/connections/whop",
+    icon: Users,
+    color: "text-purple-600",
   },
 ];
 
@@ -76,24 +112,47 @@ export default async function ConnectionsPage() {
         </p>
       </div>
 
-      {/* Connection options */}
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {connectors.map((connector) => (
-          <Card key={connector.title} className="border-stroke bg-surface hover:bg-glass transition-colors">
-            <CardHeader>
-              <CardTitle className="text-heading-2 text-ink">{connector.title}</CardTitle>
-              <CardDescription className="text-body text-charcoal">
-                {connector.description}
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Button asChild className="w-full bg-burgundy hover:bg-burgundy/90 text-surface">
-                <Link href={connector.href as Route}>Configure</Link>
-              </Button>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+      {/* Connection options as list */}
+      <Card className="border-stroke bg-surface">
+        <CardHeader>
+          <CardTitle className="text-heading-2 text-ink">Available Platforms</CardTitle>
+          <CardDescription className="text-body text-charcoal">
+            Choose a platform to configure and start syncing your sales data.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-2">
+            {connectors.map((connector) => {
+              const Icon = connector.icon;
+              return (
+                <Link
+                  key={connector.title}
+                  href={connector.href as Route}
+                  className="flex items-center gap-4 p-4 rounded-lg border border-stroke bg-surface hover:bg-glass transition-all duration-200 hover:shadow-sm group"
+                >
+                  {/* Icon */}
+                  <div className={`flex-shrink-0 w-12 h-12 rounded-lg bg-surface border border-stroke flex items-center justify-center ${connector.color} group-hover:scale-110 transition-transform`}>
+                    <Icon className="w-6 h-6" />
+                  </div>
+
+                  {/* Content */}
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-body font-semibold text-ink group-hover:text-burgundy transition-colors">
+                      {connector.title}
+                    </h3>
+                    <p className="text-small text-charcoal line-clamp-1">
+                      {connector.description}
+                    </p>
+                  </div>
+
+                  {/* Arrow */}
+                  <ChevronRight className="w-5 h-5 text-charcoal group-hover:text-burgundy group-hover:translate-x-1 transition-all flex-shrink-0" />
+                </Link>
+              );
+            })}
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Existing connections */}
       <Card className="border-stroke bg-surface">

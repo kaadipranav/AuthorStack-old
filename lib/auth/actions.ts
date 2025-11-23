@@ -54,6 +54,9 @@ export async function signUpAction(
   }
 
   const { email, password, fullName } = parsed.data;
+  const plan = formData.get("plan") as "free" | "pro" | null;
+  const subscriptionTier = plan === "pro" ? "pro" : "free";
+
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
@@ -69,8 +72,21 @@ export async function signUpAction(
   if (data.user?.id) {
     await supabase
       .from("profiles")
-      .update({ full_name: fullName })
+      .update({ 
+        full_name: fullName,
+        subscription_tier: subscriptionTier,
+      })
       .eq("id", data.user.id);
+
+    // If PRO plan selected, store intent for post-verification checkout
+    if (plan === "pro") {
+      await supabase
+        .from("profiles")
+        .update({ 
+          metadata: { pending_pro_checkout: true }
+        })
+        .eq("id", data.user.id);
+    }
   }
 
   redirect("/auth/verify-email");
