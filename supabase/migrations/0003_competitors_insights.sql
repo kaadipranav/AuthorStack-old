@@ -1,6 +1,15 @@
 -- Competitors and Insights schema
 -- Supports Amazon KDP competitor tracking and analytics insights
 
+-- Ensure set_updated_at function exists (safe to run multiple times)
+create or replace function public.set_updated_at()
+returns trigger as $$
+begin
+  new.updated_at = timezone('utc'::text, now());
+  return new;
+end;
+$$ language plpgsql;
+
 -- Competitors table: stores basic competitor information
 create table if not exists public.competitors (
   id uuid primary key default gen_random_uuid(),
@@ -167,7 +176,8 @@ create policy "Users can delete their own observations"
   using (auth.uid() = profile_id);
 
 -- Helper view for competitor summary
-create view if not exists public.competitor_summary_view as
+drop view if exists public.competitor_summary_view;
+create view public.competitor_summary_view as
   select
     c.id,
     c.profile_id,

@@ -1,17 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { requireAuth } from '@/lib/auth/session';
 import { services } from '@/lib/services';
-import { apiResponse } from '@/lib/api/responses';
+import { successResponse, errorResponse } from '@/lib/api/responses';
 
 export async function GET(req: NextRequest) {
     try {
         const user = await requireAuth();
         const observations = await services.insights.getObservations(user.id);
 
-        return apiResponse.success(observations);
+        return successResponse(observations);
     } catch (error: any) {
         console.error('GET /api/insights/observations error:', error);
-        return apiResponse.error(error.message || 'Failed to fetch observations', 500);
+        return errorResponse(error.message || 'Failed to fetch observations', undefined, 500);
     }
 }
 
@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
         const { observationText, tags } = body;
 
         if (!observationText) {
-            return apiResponse.error('Observation text is required', 400);
+            return errorResponse('Observation text is required', undefined, 400);
         }
 
         const observation = await services.insights.addObservation(user.id, {
@@ -31,9 +31,9 @@ export async function POST(req: NextRequest) {
             tags,
         });
 
-        return apiResponse.success(observation, 201);
+        return successResponse(observation, undefined, 201);
     } catch (error: any) {
         console.error('POST /api/insights/observations error:', error);
-        return apiResponse.error(error.message || 'Failed to add observation', 500);
+        return errorResponse(error.message || 'Failed to add observation', undefined, 500);
     }
 }

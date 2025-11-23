@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { requireAuth } from '@/lib/auth/session';
 import { services } from '@/lib/services';
-import { apiResponse } from '@/lib/api/responses';
+import { successResponse, errorResponse } from '@/lib/api/responses';
 
 export async function GET(req: NextRequest) {
     try {
@@ -11,9 +11,9 @@ export async function GET(req: NextRequest) {
 
         const dashboard = await services.insights.getDashboard(user.id, days);
 
-        return apiResponse.success(dashboard);
+        return successResponse(dashboard);
     } catch (error: any) {
         console.error('GET /api/insights error:', error);
-        return apiResponse.error(error.message || 'Failed to fetch insights', 500);
+        return errorResponse(error.message || 'Failed to fetch insights', undefined, 500);
     }
 }
