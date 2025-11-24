@@ -13,6 +13,8 @@ import {
 } from "@/components/ui/accordion";
 import { ArrowRight, Users, MessageCircle, Heart, TrendingUp, Star, CheckCircle, Shield, BookOpen, Sparkles } from "lucide-react";
 import { FeedList } from "@/components/community/FeedList";
+import { Logo } from "@/components/ui/logo";
+import { DimModeToggle } from "@/components/ui/dim-mode-toggle";
 
 export default function CommunityLandingPage() {
     const [isClient, setIsClient] = useState(false);
@@ -37,20 +39,14 @@ export default function CommunityLandingPage() {
                 <div className="mx-auto flex w-full max-w-[1400px] items-center justify-between px-6 py-4">
                     <Link href="/" className="flex items-center gap-3">
                         <div className="relative h-8 w-8 transition-transform duration-300 hover:scale-105">
-                            <Image
-                                src="/logos/Light_logo.png"
-                                alt="AuthorStack logo"
-                                fill
-                                sizes="32px"
-                                priority
-                                className="object-contain"
-                            />
+                            <Logo width={32} height={32} priority className="object-contain" />
                         </div>
                         <span className="text-sm font-semibold uppercase tracking-[0.2em] text-charcoal">
                             AuthorStack
                         </span>
                     </Link>
                     <div className="flex items-center gap-3">
+                        <DimModeToggle />
                         <Button asChild variant="ghost" size="sm" className="hidden sm:inline-flex">
                             <Link href="/auth/sign-in">Sign in</Link>
                         </Button>
@@ -76,9 +72,8 @@ export default function CommunityLandingPage() {
                             <div className="relative group">
                                 <div className="absolute inset-0 bg-gradient-to-br from-burgundy/20 to-amber/20 rounded-3xl blur-2xl group-hover:blur-3xl transition-all duration-500" />
                                 <div className="relative bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-2xl border-2 border-burgundy/10 group-hover:border-burgundy/30 group-hover:scale-105 transition-all duration-300">
-                                    <Image
-                                        src="/logos/Communtiy_logo_light.png"
-                                        alt="AuthorStack Community"
+                                    <Logo
+                                        variant="community"
                                         width={300}
                                         height={100}
                                         priority
@@ -509,13 +504,7 @@ export default function CommunityLandingPage() {
                 <div className="container mx-auto px-6 max-w-6xl">
                     <div className="flex flex-col md:flex-row justify-between items-center gap-4">
                         <div className="flex items-center gap-3">
-                            <Image
-                                src="/logos/Light_logo.png"
-                                alt="AuthorStack"
-                                width={24}
-                                height={24}
-                                className="object-contain"
-                            />
+                            <Logo width={24} height={24} className="object-contain" />
                             <span className="text-sm text-charcoal">
                                 © 2025 AuthorStack. Built for indie authors.
                             </span>

@@ -8,9 +8,16 @@ interface LogoProps {
     height?: number;
     className?: string;
     priority?: boolean;
+    variant?: "default" | "community";
 }
 
-export function Logo({ width = 32, height = 32, className = "", priority = false }: LogoProps) {
+export function Logo({
+    width = 32,
+    height = 32,
+    className = "",
+    priority = false,
+    variant = "default"
+}: LogoProps) {
     const [isDimMode, setIsDimMode] = useState(false);
 
     useEffect(() => {
@@ -31,10 +38,17 @@ export function Logo({ width = 32, height = 32, className = "", priority = false
         return () => observer.disconnect();
     }, []);
 
+    const getLogoSrc = () => {
+        if (variant === "community") {
+            return isDimMode ? "/logos/Community_logo_dark.png" : "/logos/Community_logo_light.png";
+        }
+        return isDimMode ? "/logos/Dark_logo.png" : "/logos/Light_logo.png";
+    };
+
     return (
         <Image
-            src={isDimMode ? "/logos/Dark_logo.png" : "/logos/Light_logo.png"}
-            alt="AuthorStack logo"
+            src={getLogoSrc()}
+            alt={variant === "community" ? "AuthorStack Community" : "AuthorStack logo"}
             width={width}
             height={height}
             priority={priority}

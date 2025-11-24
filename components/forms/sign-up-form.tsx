@@ -46,6 +46,10 @@ export function SignUpForm() {
 
   return (
     <form action={clientAction} className="space-y-4">
+      <div className="text-center space-y-2 mb-6">
+        <h1 className="text-3xl font-semibold text-ink">Create your account</h1>
+        <p className="text-sm text-charcoal">Join AuthorStack to manage your book launches</p>
+      </div>
       <div className="space-y-2">
         <Label htmlFor="fullName">Full name</Label>
         <Input id="fullName" name="fullName" required autoComplete="name" />

@@ -44,6 +44,10 @@ export function SignInForm() {
 
   return (
     <form action={clientAction} className="space-y-4">
+      <div className="text-center space-y-2 mb-6">
+        <h1 className="text-3xl font-semibold text-ink">Sign in</h1>
+        <p className="text-sm text-charcoal">Access your AuthorStack dashboard</p>
+      </div>
       <div className="space-y-2">
         <Label htmlFor="email">Email</Label>
         <Input id="email" name="email" type="email" required autoComplete="email" />
