@@ -14,11 +14,38 @@ const predictionService = new PredictionEngineService();
 /**
  * POST /api/ai/predictions
  * Generate predictions for a book
+ * Rate limited: 10 requests per hour
  */
 export async function POST(req: Request) {
   try {
+    // Check rate limit
+    const { getRateLimiter, RATE_LIMITS } = await import("@/lib/rate-limit");
+    const rateLimiter = getRateLimiter();
+
     const user = await requireAuth();
-    
+    const identifier = `user:${user.id}`;
+
+    const rateLimit = await rateLimiter.checkLimit({
+      ...RATE_LIMITS.AI_INSIGHTS,
+      identifier,
+    });
+
+    if (!rateLimit.success) {
+      const retryAfter = Math.ceil((rateLimit.reset - Date.now()) / 1000);
+      return NextResponse.json(
+        {
+          error: "Rate limit exceeded",
+          message: `Too many prediction requests. Please try again in ${retryAfter} seconds.`,
+        },
+        {
+          status: 429,
+          headers: {
+            "Retry-After": retryAfter.toString(),
+          },
+        }
+      );
+    }
+
     const body = await req.json();
     const parsed = predictionRequestSchema.safeParse(body);
 
@@ -63,7 +90,7 @@ export async function GET(req: Request) {
   try {
     const user = await requireAuth();
     const { searchParams } = new URL(req.url);
-    
+
     const bookId = searchParams.get("bookId") || undefined;
     const type = searchParams.get("type") || undefined;
 

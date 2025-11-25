@@ -174,41 +174,109 @@ export class AIAssistantService {
   }
 
   /**
-   * Call AI provider (placeholder for OpenRouter/Anthropic integration)
+   * Call AI provider (OpenRouter with DeepSeek V3)
    */
   private async callAIProvider(
     message: string,
     context: ChatContext,
     sessionId: string
   ): Promise<ChatResponse> {
-    // TODO: Integrate with OpenRouter/Anthropic API
-    // This is a placeholder that will be replaced with actual AI API calls
+    try {
+      const { getAIProvider } = await import("@/lib/ai/openrouter-provider");
+      const provider = getAIProvider();
 
-    const systemPrompt = `You are an AI assistant for AuthorStack, helping indie authors with book launches, pricing, marketing, and sales optimization.
+      // Build system prompt with user context
+      const systemPrompt = `You are an AI assistant for AuthorStack, helping indie authors with book launches, pricing, marketing, and sales optimization.
 
 User Context:
 - Books: ${context.books?.length || 0} books tracked
-- Recent Sales: Last 30 days of sales data available
+${context.books?.map((b) => `  • ${b.title} (${b.format}, ${b.status})`).join("\n") || "  (No books yet)"}
+- Recent Sales: ${context.recentSales?.length || 0} sales events in last 30 days
 - Competitors: ${context.competitors?.length || 0} competitors tracked
 - User Notes: ${context.userNotes?.length || 0} manual observations
 
-Provide helpful, actionable advice specific to book publishing and marketing.`;
+Provide helpful, actionable advice specific to book publishing and marketing. Be concise but thorough. Use data from the context when relevant.`;
 
-    // Placeholder response logic
-    const response: ChatResponse = {
-      message: "AI integration pending. Add OPENROUTER_API_KEY or ANTHROPIC_API_KEY to environment variables.",
-      suggestions: [
-        "Check your book analytics",
-        "Review pricing recommendations",
-        "Analyze competitor data",
-      ],
-      metadata: {
-        model: "placeholder",
-        sessionId,
-      },
-    };
+      // Get conversation history for context
+      const history = await this.getConversationHistory(context.profileId, sessionId);
+      const recentHistory = history.slice(-5); // Last 5 messages for context
 
-    return response;
+      // Build messages array
+      const messages = [
+        { role: "system" as const, content: systemPrompt },
+        ...recentHistory.map((msg) => ({
+          role: msg.role,
+          content: msg.content,
+        })),
+        { role: "user" as const, content: message },
+      ];
+
+      // Call AI provider
+      const aiResponse = await provider.chat(messages, {
+        temperature: 0.7,
+        maxTokens: 1500,
+      });
+
+      // Generate contextual suggestions
+      const suggestions = this.generateSuggestions(context);
+
+      return {
+        message: aiResponse,
+        suggestions,
+        metadata: {
+          model: "deepseek/deepseek-chat",
+          sessionId,
+          contextUsed: {
+            books: context.books?.length || 0,
+            sales: context.recentSales?.length || 0,
+            competitors: context.competitors?.length || 0,
+          },
+        },
+      };
+    } catch (error) {
+      console.error("[AI] Provider error:", error);
+
+      // Fallback response if AI fails
+      return {
+        message: "I'm having trouble connecting to the AI service right now. Please try again in a moment. In the meantime, you can check your dashboard for sales analytics and book performance data.",
+        suggestions: [
+          "Check your book analytics",
+          "Review pricing recommendations",
+          "Analyze competitor data",
+        ],
+        metadata: {
+          model: "fallback",
+          sessionId,
+          error: error instanceof Error ? error.message : "Unknown error",
+        },
+      };
+    }
+  }
+
+  /**
+   * Generate contextual suggestions based on user data
+   */
+  private generateSuggestions(context: ChatContext): string[] {
+    const suggestions: string[] = [];
+
+    if (context.books && context.books.length > 0) {
+      suggestions.push("How are my books performing this month?");
+      suggestions.push("What pricing strategy should I use?");
+    }
+
+    if (context.competitors && context.competitors.length > 0) {
+      suggestions.push("How do I compare to my competitors?");
+    }
+
+    if (context.recentSales && context.recentSales.length > 10) {
+      suggestions.push("What are my sales trends?");
+      suggestions.push("Which platform is performing best?");
+    } else {
+      suggestions.push("How can I increase my book sales?");
+      suggestions.push("What marketing strategies work for indie authors?");
+    }
+
+    return suggestions.slice(0, 4); // Return top 4 suggestions
   }
 }
 
