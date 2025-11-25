@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import NextImage from "next/image";
 
 import { FormSubmit } from "@/components/forms/form-submit";
 import { Input } from "@/components/ui/input";
@@ -46,7 +47,19 @@ export function SignUpForm() {
 
   return (
     <form action={clientAction} className="space-y-4">
-      <div className="text-center space-y-2 mb-6">
+      <div className="text-center space-y-4 mb-6">
+        <div className="flex justify-center mb-4">
+          <div className="relative h-32 w-32 transition-transform duration-300 hover:scale-105">
+            <NextImage
+              src="/logos/Light_logo.png"
+              alt="AuthorStack logo"
+              fill
+              sizes="128px"
+              priority
+              className="object-contain"
+            />
+          </div>
+        </div>
         <h1 className="text-3xl font-semibold text-ink">Create your account</h1>
         <p className="text-sm text-charcoal">Join AuthorStack to manage your book launches</p>
       </div>

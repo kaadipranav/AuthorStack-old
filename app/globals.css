@@ -234,4 +234,9 @@
     background-size: cover;
     background-repeat: repeat;
   }
+  
+  /* Reduce background visibility in dim mode */
+  .dim .bg-auth-bg {
+    opacity: 0.3;
+  }
 }

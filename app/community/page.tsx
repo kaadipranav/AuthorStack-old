@@ -2,8 +2,10 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { DimModeToggle } from "@/components/ui/dim-mode-toggle";
+import { Logo } from "@/components/ui/logo";
+import { CommunityLogo } from "@/components/ui/community-logo";
 import { Card, CardContent } from "@/components/ui/card";
 import {
     Accordion,
@@ -13,8 +15,6 @@ import {
 } from "@/components/ui/accordion";
 import { ArrowRight, Users, MessageCircle, Heart, TrendingUp, Star, CheckCircle, Shield, BookOpen, Sparkles } from "lucide-react";
 import { FeedList } from "@/components/community/FeedList";
-import { Logo } from "@/components/ui/logo";
-import { DimModeToggle } from "@/components/ui/dim-mode-toggle";
 
 export default function CommunityLandingPage() {
     const [isClient, setIsClient] = useState(false);
@@ -38,7 +38,7 @@ export default function CommunityLandingPage() {
             <header className="border-b border-stroke bg-surface/80 backdrop-blur sticky top-0 z-50">
                 <div className="mx-auto flex w-full max-w-[1400px] items-center justify-between px-6 py-4">
                     <Link href="/" className="flex items-center gap-3">
-                        <div className="relative h-8 w-8 transition-transform duration-300 hover:scale-105">
+                        <div className="transition-transform duration-300 hover:scale-105">
                             <Logo width={32} height={32} priority className="object-contain" />
                         </div>
                         <span className="text-sm font-semibold uppercase tracking-[0.2em] text-charcoal">
@@ -58,7 +58,7 @@ export default function CommunityLandingPage() {
             </header>
 
             {/* Hero Section with Prominent Logo */}
-            <section className="relative overflow-hidden bg-gradient-to-br from-[#FFF8F0] via-[#FFF5EB] to-[#FFE8D6] py-20">
+            <section className="relative overflow-hidden bg-gradient-to-br from-[#FFF8F0] via-[#FFF5EB] to-[#FFE8D6] dim:from-charcoal dim:via-[#2a2a2a] dim:to-[#1a1a1a] py-20">
                 {/* Decorative background elements */}
                 <div className="absolute inset-0 opacity-10">
                     <div className="absolute top-20 left-10 w-64 h-64 bg-burgundy/20 rounded-full blur-3xl animate-pulse" />
@@ -71,14 +71,8 @@ export default function CommunityLandingPage() {
                         <div className="flex justify-center mb-8">
                             <div className="relative group">
                                 <div className="absolute inset-0 bg-gradient-to-br from-burgundy/20 to-amber/20 rounded-3xl blur-2xl group-hover:blur-3xl transition-all duration-500" />
-                                <div className="relative bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-2xl border-2 border-burgundy/10 group-hover:border-burgundy/30 group-hover:scale-105 transition-all duration-300">
-                                    <Logo
-                                        variant="community"
-                                        width={300}
-                                        height={100}
-                                        priority
-                                        className="object-contain"
-                                    />
+                                <div className="relative bg-white/80 dim:bg-charcoal/80 backdrop-blur-sm rounded-3xl p-8 shadow-2xl border-2 border-burgundy/10 group-hover:border-burgundy/30 group-hover:scale-105 transition-all duration-300">
+                                    <CommunityLogo width={300} height={100} priority className="object-contain" />
                                 </div>
                             </div>
                         </div>
@@ -92,16 +86,16 @@ export default function CommunityLandingPage() {
 
                         {/* Trust Indicators */}
                         <div className="flex flex-wrap justify-center gap-6 mb-8 text-sm">
-                            <div className="flex items-center gap-2 text-charcoal bg-white/60 px-4 py-2 rounded-full backdrop-blur-sm">
-                                <CheckCircle className="h-5 w-5 text-green-600" />
+                            <div className="flex items-center gap-2 text-charcoal dim:text-surface bg-white/60 dim:bg-surface/10 px-4 py-2 rounded-full backdrop-blur-sm">
+                                <CheckCircle className="h-5 w-5 text-green-600 dim:text-green-400" />
                                 <span className="font-medium">Free forever</span>
                             </div>
-                            <div className="flex items-center gap-2 text-charcoal bg-white/60 px-4 py-2 rounded-full backdrop-blur-sm">
-                                <CheckCircle className="h-5 w-5 text-green-600" />
+                            <div className="flex items-center gap-2 text-charcoal dim:text-surface bg-white/60 dim:bg-surface/10 px-4 py-2 rounded-full backdrop-blur-sm">
+                                <CheckCircle className="h-5 w-5 text-green-600 dim:text-green-400" />
                                 <span className="font-medium">No credit card required</span>
                             </div>
-                            <div className="flex items-center gap-2 text-charcoal bg-white/60 px-4 py-2 rounded-full backdrop-blur-sm">
-                                <Shield className="h-5 w-5 text-burgundy" />
+                            <div className="flex items-center gap-2 text-charcoal dim:text-surface bg-white/60 dim:bg-surface/10 px-4 py-2 rounded-full backdrop-blur-sm">
+                                <Shield className="h-5 w-5 text-burgundy dim:text-amber" />
                                 <span className="font-medium">Privacy-first platform</span>
                             </div>
                         </div>
@@ -147,30 +141,30 @@ export default function CommunityLandingPage() {
 
                     {/* Feature Highlights */}
                     <div className="grid md:grid-cols-4 gap-6 mt-16">
-                        <div className="bg-white/60 backdrop-blur-sm rounded-xl p-6 text-center border border-burgundy/10 hover:border-burgundy/30 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-                            <div className="w-12 h-12 bg-burgundy/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <Users className="h-6 w-6 text-burgundy" />
+                        <div className="bg-white/60 dim:bg-surface/40 backdrop-blur-sm rounded-xl p-6 text-center border border-burgundy/10 hover:border-burgundy/30 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                            <div className="w-12 h-12 bg-burgundy/10 dim:bg-burgundy/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <Users className="h-6 w-6 text-burgundy dim:text-amber" />
                             </div>
                             <h3 className="font-semibold text-ink mb-2">Author Profiles</h3>
                             <p className="text-sm text-charcoal">Showcase your books and connect with readers</p>
                         </div>
-                        <div className="bg-white/60 backdrop-blur-sm rounded-xl p-6 text-center border border-burgundy/10 hover:border-burgundy/30 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-                            <div className="w-12 h-12 bg-burgundy/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <MessageCircle className="h-6 w-6 text-burgundy" />
+                        <div className="bg-white/60 dim:bg-surface/40 backdrop-blur-sm rounded-xl p-6 text-center border border-burgundy/10 hover:border-burgundy/30 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                            <div className="w-12 h-12 bg-burgundy/10 dim:bg-burgundy/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <MessageCircle className="h-6 w-6 text-burgundy dim:text-amber" />
                             </div>
                             <h3 className="font-semibold text-ink mb-2">Share Updates</h3>
                             <p className="text-sm text-charcoal">Post milestones and book launches</p>
                         </div>
-                        <div className="bg-white/60 backdrop-blur-sm rounded-xl p-6 text-center border border-burgundy/10 hover:border-burgundy/30 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-                            <div className="w-12 h-12 bg-burgundy/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <Heart className="h-6 w-6 text-burgundy" />
+                        <div className="bg-white/60 dim:bg-surface/40 backdrop-blur-sm rounded-xl p-6 text-center border border-burgundy/10 hover:border-burgundy/30 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                            <div className="w-12 h-12 bg-burgundy/10 dim:bg-burgundy/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <Heart className="h-6 w-6 text-burgundy dim:text-amber" />
                             </div>
                             <h3 className="font-semibold text-ink mb-2">Engage</h3>
                             <p className="text-sm text-charcoal">Like, comment, and support fellow authors</p>
                         </div>
-                        <div className="bg-white/60 backdrop-blur-sm rounded-xl p-6 text-center border border-burgundy/10 hover:border-burgundy/30 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-                            <div className="w-12 h-12 bg-burgundy/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <TrendingUp className="h-6 w-6 text-burgundy" />
+                        <div className="bg-white/60 dim:bg-surface/40 backdrop-blur-sm rounded-xl p-6 text-center border border-burgundy/10 hover:border-burgundy/30 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                            <div className="w-12 h-12 bg-burgundy/10 dim:bg-burgundy/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <TrendingUp className="h-6 w-6 text-burgundy dim:text-amber" />
                             </div>
                             <h3 className="font-semibold text-ink mb-2">Grow Together</h3>
                             <p className="text-sm text-charcoal">Learn from successful indie authors</p>
@@ -183,7 +177,7 @@ export default function CommunityLandingPage() {
             <section className="py-16 bg-paper">
                 <div className="container mx-auto px-6 max-w-6xl">
                     <div className="text-center mb-12">
-                        <div className="inline-flex items-center gap-2 bg-burgundy/10 text-burgundy px-4 py-2 rounded-full text-sm font-medium mb-4">
+                        <div className="inline-flex items-center gap-2 bg-burgundy/10 dim:bg-burgundy/20 text-burgundy dim:text-amber px-4 py-2 rounded-full text-sm font-medium mb-4">
                             <Sparkles className="h-4 w-4" />
                             <span>Simple & Effective</span>
                         </div>
@@ -197,7 +191,7 @@ export default function CommunityLandingPage() {
 
                     <div className="grid md:grid-cols-3 gap-12">
                         <div className="text-center group">
-                            <div className="w-20 h-20 bg-burgundy text-white rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                            <div className="w-20 h-20 bg-burgundy dim:bg-amber text-white dim:text-charcoal rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
                                 1
                             </div>
                             <h3 className="font-semibold text-xl mb-3 text-ink">Create Your Profile</h3>
@@ -207,7 +201,7 @@ export default function CommunityLandingPage() {
                         </div>
 
                         <div className="text-center group">
-                            <div className="w-20 h-20 bg-burgundy text-white rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                            <div className="w-20 h-20 bg-burgundy dim:bg-amber text-white dim:text-charcoal rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
                                 2
                             </div>
                             <h3 className="font-semibold text-xl mb-3 text-ink">Share Your Journey</h3>
@@ -217,7 +211,7 @@ export default function CommunityLandingPage() {
                         </div>
 
                         <div className="text-center group">
-                            <div className="w-20 h-20 bg-burgundy text-white rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                            <div className="w-20 h-20 bg-burgundy dim:bg-amber text-white dim:text-charcoal rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
                                 3
                             </div>
                             <h3 className="font-semibold text-xl mb-3 text-ink">Grow Together</h3>
@@ -236,7 +230,7 @@ export default function CommunityLandingPage() {
             </section>
 
             {/* Featured Authors Section */}
-            <section className="py-16 bg-gradient-to-br from-burgundy/5 to-amber/5">
+            <section className="py-16 bg-gradient-to-br from-burgundy/5 to-amber/5 dim:from-charcoal/50 dim:to-[#1a1a1a]">
                 <div className="container mx-auto px-6 max-w-6xl">
                     <div className="text-center mb-12">
                         <h2 className="font-serif text-3xl md:text-4xl text-ink mb-4">
@@ -249,20 +243,20 @@ export default function CommunityLandingPage() {
 
                     <div className="grid md:grid-cols-5 gap-6">
                         {featuredAuthors.map((author, index) => (
-                            <Card key={index} className="border-2 border-stroke hover:border-burgundy/30 hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+                            <Card key={index} className="border-2 border-stroke hover:border-burgundy/30 dim:hover:border-amber/50 hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
                                 <CardContent className="p-6 text-center">
-                                    <div className="w-16 h-16 bg-gradient-to-br from-burgundy/20 to-amber/20 rounded-full flex items-center justify-center mx-auto mb-3">
-                                        <span className="text-2xl font-serif text-burgundy font-bold">{author.avatar}</span>
+                                    <div className="w-16 h-16 bg-gradient-to-br from-burgundy/20 to-amber/20 dim:from-burgundy/30 dim:to-amber/30 rounded-full flex items-center justify-center mx-auto mb-3">
+                                        <span className="text-2xl font-serif text-burgundy dim:text-amber font-bold">{author.avatar}</span>
                                     </div>
                                     <div className="font-semibold text-ink mb-1">{author.name}</div>
                                     <div className="text-sm text-charcoal mb-3">{author.genre}</div>
                                     <div className="flex justify-center gap-4 text-xs mb-3">
                                         <div>
-                                            <div className="font-bold text-burgundy">{author.books}</div>
+                                            <div className="font-bold text-burgundy dim:text-amber">{author.books}</div>
                                             <div className="text-charcoal">Books</div>
                                         </div>
                                         <div>
-                                            <div className="font-bold text-burgundy">{author.followers}</div>
+                                            <div className="font-bold text-burgundy dim:text-amber">{author.followers}</div>
                                             <div className="text-charcoal">Followers</div>
                                         </div>
                                     </div>
@@ -290,11 +284,11 @@ export default function CommunityLandingPage() {
 
                     <div className="grid md:grid-cols-3 gap-8">
                         {/* Testimonial 1 */}
-                        <Card className="border-2 border-stroke hover:border-burgundy/30 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                        <Card className="border-2 border-stroke hover:border-burgundy/30 dim:hover:border-amber/50 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                             <CardContent className="pt-6">
                                 <div className="flex items-center gap-3 mb-4">
-                                    <div className="w-12 h-12 bg-burgundy/10 rounded-full flex items-center justify-center">
-                                        <span className="text-lg font-serif text-burgundy">SM</span>
+                                    <div className="w-12 h-12 bg-burgundy/10 dim:bg-burgundy/20 rounded-full flex items-center justify-center">
+                                        <span className="text-lg font-serif text-burgundy dim:text-amber">SM</span>
                                     </div>
                                     <div>
                                         <div className="font-semibold text-ink">Sarah Mitchell</div>
@@ -313,11 +307,11 @@ export default function CommunityLandingPage() {
                         </Card>
 
                         {/* Testimonial 2 */}
-                        <Card className="border-2 border-stroke hover:border-burgundy/30 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                        <Card className="border-2 border-stroke hover:border-burgundy/30 dim:hover:border-amber/50 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                             <CardContent className="pt-6">
                                 <div className="flex items-center gap-3 mb-4">
-                                    <div className="w-12 h-12 bg-burgundy/10 rounded-full flex items-center justify-center">
-                                        <span className="text-lg font-serif text-burgundy">JC</span>
+                                    <div className="w-12 h-12 bg-burgundy/10 dim:bg-burgundy/20 rounded-full flex items-center justify-center">
+                                        <span className="text-lg font-serif text-burgundy dim:text-amber">JC</span>
                                     </div>
                                     <div>
                                         <div className="font-semibold text-ink">James Chen</div>
@@ -336,11 +330,11 @@ export default function CommunityLandingPage() {
                         </Card>
 
                         {/* Testimonial 3 */}
-                        <Card className="border-2 border-stroke hover:border-burgundy/30 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                        <Card className="border-2 border-stroke hover:border-burgundy/30 dim:hover:border-amber/50 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                             <CardContent className="pt-6">
                                 <div className="flex items-center gap-3 mb-4">
-                                    <div className="w-12 h-12 bg-burgundy/10 rounded-full flex items-center justify-center">
-                                        <span className="text-lg font-serif text-burgundy">EP</span>
+                                    <div className="w-12 h-12 bg-burgundy/10 dim:bg-burgundy/20 rounded-full flex items-center justify-center">
+                                        <span className="text-lg font-serif text-burgundy dim:text-amber">EP</span>
                                     </div>
                                     <div>
                                         <div className="font-semibold text-ink">Emma Parker</div>
@@ -417,7 +411,7 @@ export default function CommunityLandingPage() {
 
                     <Accordion type="single" collapsible className="w-full">
                         <AccordionItem value="free">
-                            <AccordionTrigger className="text-left font-semibold text-ink hover:text-burgundy">
+                            <AccordionTrigger className="text-left font-semibold text-ink hover:text-burgundy dim:hover:text-amber">
                                 Is AuthorStack Community really free?
                             </AccordionTrigger>
                             <AccordionContent className="text-charcoal leading-relaxed">
@@ -426,7 +420,7 @@ export default function CommunityLandingPage() {
                         </AccordionItem>
 
                         <AccordionItem value="privacy">
-                            <AccordionTrigger className="text-left font-semibold text-ink hover:text-burgundy">
+                            <AccordionTrigger className="text-left font-semibold text-ink hover:text-burgundy dim:hover:text-amber">
                                 How do you protect my privacy?
                             </AccordionTrigger>
                             <AccordionContent className="text-charcoal leading-relaxed">
@@ -435,7 +429,7 @@ export default function CommunityLandingPage() {
                         </AccordionItem>
 
                         <AccordionItem value="who">
-                            <AccordionTrigger className="text-left font-semibold text-ink hover:text-burgundy">
+                            <AccordionTrigger className="text-left font-semibold text-ink hover:text-burgundy dim:hover:text-amber">
                                 Who can join the community?
                             </AccordionTrigger>
                             <AccordionContent className="text-charcoal leading-relaxed">
@@ -444,7 +438,7 @@ export default function CommunityLandingPage() {
                         </AccordionItem>
 
                         <AccordionItem value="features">
-                            <AccordionTrigger className="text-left font-semibold text-ink hover:text-burgundy">
+                            <AccordionTrigger className="text-left font-semibold text-ink hover:text-burgundy dim:hover:text-amber">
                                 What features are included?
                             </AccordionTrigger>
                             <AccordionContent className="text-charcoal leading-relaxed">
@@ -453,7 +447,7 @@ export default function CommunityLandingPage() {
                         </AccordionItem>
 
                         <AccordionItem value="support">
-                            <AccordionTrigger className="text-left font-semibold text-ink hover:text-burgundy">
+                            <AccordionTrigger className="text-left font-semibold text-ink hover:text-burgundy dim:hover:text-amber">
                                 How do I get help if I need it?
                             </AccordionTrigger>
                             <AccordionContent className="text-charcoal leading-relaxed">
@@ -465,7 +459,7 @@ export default function CommunityLandingPage() {
             </section>
 
             {/* Final CTA Section */}
-            <section className="py-16 bg-gradient-to-br from-burgundy/10 to-amber/10">
+            <section className="py-16 bg-gradient-to-br from-burgundy/10 to-amber/10 dim:from-charcoal/50 dim:to-[#1a1a1a]">
                 <div className="container mx-auto px-6 max-w-4xl text-center">
                     <h2 className="font-serif text-3xl md:text-4xl text-ink mb-4">
                         Ready to Join 2,500+ Authors?

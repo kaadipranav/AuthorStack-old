@@ -8,8 +8,8 @@ export const metadata = {
 
 export default function SignUpPage() {
   return (
-    <div className="min-h-screen bg-auth-bg flex items-center justify-center p-4">
-      <div className="w-full max-w-md space-y-6 rounded-2xl border border-burgundy/10 bg-surface p-8 shadow-xl">
+    <div className="min-h-screen flex items-center justify-center p-4">
+      <div className="w-full max-w-md space-y-6">
         <SignUpForm />
         <div className="flex items-center justify-center">
           <GoogleSignInButton />

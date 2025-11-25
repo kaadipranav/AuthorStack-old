@@ -11,10 +11,10 @@ export const metadata = {
 export default function SignupPage() {
   return (
     <PublicShell hideAuthLinks mainClassName="flex min-h-[calc(100vh-160px)] flex-col justify-center gap-12 pb-24">
-      <div className="relative min-h-screen bg-auth-bg bg-cover bg-center flex items-center justify-center dark:bg-paper">
-        {/* Optional overlay for readability */}
-        <div className="absolute inset-0 bg-white/30 dark:bg-paper/80" />
-        <div className="relative z-10 w-full max-w-lg space-y-6 rounded-2xl border border-burgundy/10 dark:border-burgundy/20 bg-surface dark:bg-surface-elevated p-8 shadow-xl shadow-burgundy/10 dark:shadow-burgundy/30">
+      <div className="relative min-h-screen bg-auth-bg bg-cover bg-center flex items-center justify-center">
+        {/* Adaptive overlay for readability in both light and dim modes */}
+        <div className="absolute inset-0 bg-white/40 dim:bg-charcoal/85" />
+        <div className="relative z-10 w-full max-w-lg space-y-6 rounded-2xl border border-burgundy/10 bg-surface/95 backdrop-blur-md p-8 shadow-xl shadow-burgundy/10">
           <div className="text-center space-y-2">
             <h1 className="text-3xl font-semibold text-ink">Create your account</h1>
             <p className="text-sm text-charcoal">

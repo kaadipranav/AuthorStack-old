@@ -3,14 +3,14 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 
-interface LogoProps {
+interface CommunityLogoProps {
     width?: number;
     height?: number;
     className?: string;
     priority?: boolean;
 }
 
-export function Logo({ width = 32, height = 32, className = "", priority = false }: LogoProps) {
+export function CommunityLogo({ width = 300, height = 100, className = "", priority = false }: CommunityLogoProps) {
     const [isDimMode, setIsDimMode] = useState(false);
 
     useEffect(() => {
@@ -33,8 +33,8 @@ export function Logo({ width = 32, height = 32, className = "", priority = false
 
     return (
         <Image
-            src={isDimMode ? "/logos/Dark_logo.png" : "/logos/Light_logo.png"}
-            alt="AuthorStack logo"
+            src={isDimMode ? "/logos/Community_logo_dark.png" : "/logos/Community_logo_light.png"}
+            alt="AuthorStack Community"
             width={width}
             height={height}
             priority={priority}
