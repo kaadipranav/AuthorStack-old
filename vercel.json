@@ -5,20 +5,8 @@
   "framework": "nextjs",
   "crons": [
     {
-      "path": "/api/ingestion/cron",
-      "schedule": "0 0 * * *"
-    },
-    {
-      "path": "/api/cron/leaderboard-weekly",
-      "schedule": "0 2 * * *"
-    },
-    {
-      "path": "/api/cron/boost-status",
+      "path": "/api/cron/master",
       "schedule": "*/5 * * * *"
-    },
-    {
-      "path": "/api/cron/analytics",
-      "schedule": "0 3 * * *"
     }
   ],
   "rewrites": [
