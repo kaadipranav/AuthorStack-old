@@ -3,7 +3,7 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 export async function PATCH(
     request: Request,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
         const supabase = await createSupabaseServerClient();
@@ -16,7 +16,7 @@ export async function PATCH(
         }
 
         const body = await request.json();
-        const eventId = params.id;
+        const { id: eventId } = await params;
 
         const { data, error } = await supabase
             .from("calendar_events")
@@ -45,7 +45,7 @@ export async function PATCH(
 
 export async function DELETE(
     request: Request,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
         const supabase = await createSupabaseServerClient();
@@ -57,7 +57,7 @@ export async function DELETE(
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
         }
 
-        const eventId = params.id;
+        const { id: eventId } = await params;
 
         const { error } = await supabase
             .from("calendar_events")
