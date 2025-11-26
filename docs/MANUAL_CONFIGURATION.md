@@ -3,7 +3,7 @@
 ## 🚀 What Was Just Added
 
 ### New Features Implemented:
-1. **Pricing Page** (`/pricing`) - Full pricing page with 3 tiers (Free $0, Pro $19/mo, Enterprise $79/mo)
+1. **Pricing Page** (`/pricing`) - Full pricing page with 2 tiers (Free $0, Pro $29/mo with 14-day trial)
 2. **Billing Dashboard** (`/dashboard/billing`) - Subscription management, payment methods, invoices
 3. **Onboarding Wizard** - 3-step guided setup for new users
 4. **Progress Component** - UI component for progress bars
@@ -18,10 +18,9 @@
 1. **Create a Whop Account**
    - Go to https://whop.com/business
    - Create your business account
-   - Create 3 products/plans:
-     - **AuthorStack Free** - $0
-     - **AuthorStack Pro** - $19/month
-     - **AuthorStack Enterprise** - $79/month
+   - Create 2 products/plans:
+     - **AuthorStack Free** - $0 (optional, for tracking)
+     - **AuthorStack Pro** - $29/month (with 14-day free trial)   
 
 2. **Get API Keys**
    ```

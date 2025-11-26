@@ -156,23 +156,24 @@ export function SignUpForm() {
             <div className="flex-1">
               <div className="flex items-center gap-2">
                 <span className="font-semibold text-ink">PRO</span>
-                <span className="text-sm text-charcoal">$19/month</span>
+                <span className="text-sm text-charcoal">$29/month</span>
+                <span className="text-xs bg-burgundy/10 text-burgundy px-2 py-0.5 rounded-full">14-day free trial</span>
               </div>
               <p className="mt-1 text-sm text-charcoal">
-                Advanced analytics, revenue tracking, funnel visualization, pricing recommendations, and priority support.
+                Unlimited AI, revenue forecasting, competitor tracking, A/B testing, and email support.
               </p>
               <div className="mt-2 flex flex-wrap gap-2 text-xs text-charcoal">
                 <span className="flex items-center gap-1">
                   <CheckCircle2 className="h-3 w-3 text-burgundy" />
-                  Analytics dashboard
+                  Unlimited AI chat
                 </span>
                 <span className="flex items-center gap-1">
                   <CheckCircle2 className="h-3 w-3 text-burgundy" />
-                  Revenue insights
+                  Revenue forecasting
                 </span>
                 <span className="flex items-center gap-1">
                   <CheckCircle2 className="h-3 w-3 text-burgundy" />
-                  Pricing helper
+                  A/B testing
                 </span>
               </div>
             </div>

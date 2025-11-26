@@ -1,0 +1,11 @@
+# AuthorStack Robots.txt
+# https://authorstack.com
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /dashboard/
+Disallow: /auth/
+
+# Sitemaps
+Sitemap: https://authorstack.com/sitemap.xml

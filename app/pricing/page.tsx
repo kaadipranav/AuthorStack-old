@@ -1,13 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import type { Route } from "next";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { DimModeToggle } from "@/components/ui/dim-mode-toggle";
 import { Logo } from "@/components/ui/logo";
-import { Check, ArrowRight, Sparkles, X, Zap, Crown, Building2 } from "lucide-react";
+import { Check, ArrowRight, Sparkles, X, Zap, Crown } from "lucide-react";
 
 const plans = [
   {
@@ -22,8 +21,8 @@ const plans = [
       { text: "Launch checklists", included: true },
       { text: "Community access", included: true },
       { text: "Book management", included: true },
-      { text: "AI chat assistant", included: false },
-      { text: "Predictive analytics", included: false },
+      { text: "AI chat (5 messages/day)", included: true },
+      { text: "Revenue forecasting", included: false },
       { text: "Competitor tracking", included: false },
       { text: "A/B testing tools", included: false },
       { text: "Priority support", included: false },
@@ -35,46 +34,24 @@ const plans = [
   {
     name: "Pro",
     description: "For serious indie authors",
-    price: "$19",
+    price: "$29",
     period: "/month",
     icon: Crown,
     features: [
       { text: "Unlimited platform connections", included: true },
       { text: "Advanced analytics dashboard", included: true },
-      { text: "Launch checklists", included: true },
+      { text: "Launch checklists + calendar", included: true },
       { text: "Community access + badges", included: true },
-      { text: "Book management", included: true },
+      { text: "Unlimited book management", included: true },
       { text: "AI chat assistant (unlimited)", included: true },
-      { text: "Revenue forecasting", included: true },
-      { text: "Competitor tracking (10 books)", included: true },
+      { text: "Revenue forecasting & predictions", included: true },
+      { text: "Competitor tracking (25 books)", included: true },
       { text: "A/B testing tools", included: true },
       { text: "Email support (24h response)", included: true },
     ],
-    cta: "Start Pro Trial",
+    cta: "Start 14-Day Free Trial",
     href: "/auth/sign-up?plan=pro" as Route,
     popular: true,
-  },
-  {
-    name: "Enterprise",
-    description: "For publishing teams & agencies",
-    price: "$79",
-    period: "/month",
-    icon: Building2,
-    features: [
-      { text: "Everything in Pro", included: true },
-      { text: "Team seats (up to 5)", included: true },
-      { text: "API access", included: true },
-      { text: "Custom integrations", included: true },
-      { text: "White-label reports", included: true },
-      { text: "Dedicated account manager", included: true },
-      { text: "Advanced churn prediction", included: true },
-      { text: "Unlimited competitor tracking", included: true },
-      { text: "Custom AI training", included: true },
-      { text: "Slack/Discord integration", included: true },
-    ],
-    cta: "Contact Sales",
-    href: "/auth/sign-up?plan=enterprise" as Route,
-    popular: false,
   },
 ];
 
@@ -142,8 +119,8 @@ export default function PricingPage() {
 
       {/* Pricing Cards */}
       <section className="pb-20 px-6">
-        <div className="container mx-auto max-w-6xl">
-          <div className="grid md:grid-cols-3 gap-8">
+        <div className="container mx-auto max-w-4xl">
+          <div className="grid md:grid-cols-2 gap-8">
             {plans.map((plan) => {
               const Icon = plan.icon;
               return (
@@ -215,7 +192,7 @@ export default function PricingPage() {
 
       {/* Feature Comparison Table */}
       <section className="py-20 px-6 bg-surface border-y border-stroke">
-        <div className="container mx-auto max-w-4xl">
+        <div className="container mx-auto max-w-3xl">
           <h2 className="font-serif text-3xl text-ink text-center mb-12">
             Compare all features
           </h2>
@@ -226,7 +203,6 @@ export default function PricingPage() {
                   <th className="text-left py-4 px-4 font-medium text-charcoal">Feature</th>
                   <th className="text-center py-4 px-4 font-medium text-charcoal">Free</th>
                   <th className="text-center py-4 px-4 font-medium text-burgundy">Pro</th>
-                  <th className="text-center py-4 px-4 font-medium text-charcoal">Enterprise</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-stroke">
@@ -234,41 +210,34 @@ export default function PricingPage() {
                   <td className="py-4 px-4 text-ink">Platform connections</td>
                   <td className="py-4 px-4 text-center text-charcoal">2</td>
                   <td className="py-4 px-4 text-center text-ink font-medium">Unlimited</td>
-                  <td className="py-4 px-4 text-center text-ink font-medium">Unlimited</td>
                 </tr>
                 <tr>
                   <td className="py-4 px-4 text-ink">AI chat messages</td>
-                  <td className="py-4 px-4 text-center text-charcoal">—</td>
-                  <td className="py-4 px-4 text-center text-ink font-medium">Unlimited</td>
+                  <td className="py-4 px-4 text-center text-charcoal">5/day</td>
                   <td className="py-4 px-4 text-center text-ink font-medium">Unlimited</td>
                 </tr>
                 <tr>
-                  <td className="py-4 px-4 text-ink">Revenue predictions</td>
+                  <td className="py-4 px-4 text-ink">Revenue forecasting</td>
                   <td className="py-4 px-4 text-center text-charcoal">—</td>
-                  <td className="py-4 px-4 text-center"><Check className="h-5 w-5 text-forest mx-auto" /></td>
                   <td className="py-4 px-4 text-center"><Check className="h-5 w-5 text-forest mx-auto" /></td>
                 </tr>
                 <tr>
                   <td className="py-4 px-4 text-ink">Competitor tracking</td>
                   <td className="py-4 px-4 text-center text-charcoal">—</td>
-                  <td className="py-4 px-4 text-center text-ink font-medium">10 books</td>
-                  <td className="py-4 px-4 text-center text-ink font-medium">Unlimited</td>
+                  <td className="py-4 px-4 text-center text-ink font-medium">25 books</td>
                 </tr>
                 <tr>
                   <td className="py-4 px-4 text-ink">A/B testing</td>
                   <td className="py-4 px-4 text-center text-charcoal">—</td>
                   <td className="py-4 px-4 text-center"><Check className="h-5 w-5 text-forest mx-auto" /></td>
+                </tr>
+                <tr>
+                  <td className="py-4 px-4 text-ink">Calendar & scheduling</td>
+                  <td className="py-4 px-4 text-center text-charcoal">Basic</td>
                   <td className="py-4 px-4 text-center"><Check className="h-5 w-5 text-forest mx-auto" /></td>
                 </tr>
                 <tr>
-                  <td className="py-4 px-4 text-ink">Team seats</td>
-                  <td className="py-4 px-4 text-center text-charcoal">1</td>
-                  <td className="py-4 px-4 text-center text-charcoal">1</td>
-                  <td className="py-4 px-4 text-center text-ink font-medium">Up to 5</td>
-                </tr>
-                <tr>
-                  <td className="py-4 px-4 text-ink">API access</td>
-                  <td className="py-4 px-4 text-center text-charcoal">—</td>
+                  <td className="py-4 px-4 text-ink">Leaderboard badges</td>
                   <td className="py-4 px-4 text-center text-charcoal">—</td>
                   <td className="py-4 px-4 text-center"><Check className="h-5 w-5 text-forest mx-auto" /></td>
                 </tr>
@@ -276,7 +245,6 @@ export default function PricingPage() {
                   <td className="py-4 px-4 text-ink">Support</td>
                   <td className="py-4 px-4 text-center text-charcoal">Community</td>
                   <td className="py-4 px-4 text-center text-ink font-medium">Email (24h)</td>
-                  <td className="py-4 px-4 text-center text-ink font-medium">Dedicated</td>
                 </tr>
               </tbody>
             </table>

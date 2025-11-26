@@ -25,7 +25,8 @@
 
 ### **Pricing & Billing (NEW!)** 💳
 - ✅ Public pricing page (`/pricing`)
-- ✅ 3-tier pricing (Free $0, Pro $19/mo, Enterprise $79/mo)
+- ✅ 2-tier pricing (Free $0, Pro $29/mo)
+- ✅ 14-day free trial on Pro
 - ✅ Billing dashboard (`/dashboard/billing`)
 - ✅ Subscription management UI
 - ✅ Payment method display

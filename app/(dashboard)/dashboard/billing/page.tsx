@@ -9,8 +9,7 @@ import {
   Calendar, 
   ArrowUpRight, 
   Check, 
-  Zap, 
-  Building2,
+  Zap,
   AlertCircle,
   RefreshCw,
   Receipt,
@@ -25,23 +24,15 @@ const planDetails = {
     icon: Zap,
     color: "text-charcoal",
     bgColor: "bg-glass",
-    features: ["2 platform connections", "Basic dashboard", "Launch checklists", "Community access"],
+    features: ["2 platform connections", "Basic dashboard", "Launch checklists", "AI chat (5/day)"],
   },
   pro: {
     name: "Pro",
-    price: "$19/mo",
+    price: "$29/mo",
     icon: Crown,
     color: "text-burgundy",
     bgColor: "bg-burgundy/10",
     features: ["Unlimited platforms", "AI assistant", "Revenue forecasting", "A/B testing"],
-  },
-  enterprise: {
-    name: "Enterprise",
-    price: "$79/mo",
-    icon: Building2,
-    color: "text-amber",
-    bgColor: "bg-amber/10",
-    features: ["Everything in Pro", "Team seats", "API access", "Dedicated support"],
   },
 };
 
@@ -111,10 +102,10 @@ export default async function BillingPage() {
                 <CardDescription className="text-lg">{plan.price}</CardDescription>
               </div>
             </div>
-            {currentTier !== "enterprise" && (
+            {currentTier === "free" && (
               <Button asChild className="bg-burgundy hover:bg-burgundy/90 text-surface">
                 <Link href="/pricing">
-                  Upgrade
+                  Upgrade to Pro
                   <ArrowUpRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
